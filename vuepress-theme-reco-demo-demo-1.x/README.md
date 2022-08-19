@@ -1,15 +1,14 @@
 ---
 home: true
-heroText: vuepress-theme-reco
-tagline: A simple and beautiful vuepress blog theme.
+heroText: Auraro's Blog
+tagline: 面向对象面向君，不负代码不负卿.
 # heroImage: /hero.png
 # heroImageStyle: {
-#   maxWidth: '600px',
-#   width: '100%',
+#   maxHeight: '200px',
 #   display: block,
-#   margin: '9rem auto 2rem',
-#   background: '#fff',
-#   borderRadius: '1rem',
+#   margin: '6rem auto 1.5rem',
+#   borderRadius: '50%',
+#   boxShadow: '0 5px 18px rgba(0,0,0,0.2)'
 # }
 bgImageStyle: {
   height: '450px'
