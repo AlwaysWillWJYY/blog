@@ -145,8 +145,8 @@ module.exports = {
     
     smoothScroll: true,
     valineConfig: {
-      appId: '3znsWxW1sRV7n0V9JLVnvNvU-gzGzoHsz',
-      appKey: 'A86PspcsyWBHnmoP9ck4Af54',
+      appId: '1HbrYKc61YA2cpKyOIfSjxfr-gzGzoHsz',
+      appKey: 'MB0cbJwSejdYlix1AjjLLFRv',
     },
     logo: '/avatar.png',
     authorAvatar: '/avatar.png',
