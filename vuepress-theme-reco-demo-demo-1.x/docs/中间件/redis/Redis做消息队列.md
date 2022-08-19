@@ -1,3 +1,13 @@
+---
+title: Redis做消息队列
+date: 2022-04-25
+categories:
+ - Redis
+tags:
+ - Redis
+ - 消息队列
+---
+
 Redis不仅可作为缓存服务器，还可用作消息队列。它的列表类型天生支持杨作消息队列。如下图所示：
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/a0d0fa618b4a4c20891c996a13c086b8.png)

@@ -1,3 +1,14 @@
+---
+title: LinkedBlockingQueue
+date: 2022-04-16
+categories:
+ - 消息队列
+tags:
+ - 消息队列
+ - Kafka
+ - 阻塞队列
+---
+
 ### 1、简介
 
 在集合框架里，想必大家都用过ArrayList和LinkedList，也经常在面试中问到他们之间的区别。`ArrayList和ArrayBlockingQueue一样，内部基于数组来存放元素，而LinkedBlockingQueue则和LinkedList一样，内部基于链表来存放元素。`

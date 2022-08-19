@@ -1,3 +1,13 @@
+---
+title: Nginx负载均衡
+date: 2022-04-18
+categories:
+ - Nginx
+tags:
+ - 负载均衡
+ - Nginx
+---
+
 ### 1、负载均衡的由来
 
 早期的系统架构，基本上都是如下形式的：

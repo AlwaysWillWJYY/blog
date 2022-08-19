@@ -1,3 +1,13 @@
+---
+title: Servlet
+date: 2022-03-01
+categories:
+ - Java-Web
+tags:
+ - Java-Web
+ - Servlet
+---
+
 ### Servlet：server applet 运行在服务器端的小程序
 
 `Servlet`是一个接口（规则），定义了`Java`类被浏览器访问到（Tomcat识别）的规则；该`Java`类会被Tomcat识别并执行相应的代码，实现动态资源的接收和响应。

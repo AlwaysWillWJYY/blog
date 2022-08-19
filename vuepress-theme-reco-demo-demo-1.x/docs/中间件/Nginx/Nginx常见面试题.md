@@ -1,3 +1,13 @@
+---
+title: Nginx常见面试题
+date: 2022-04-17
+categories:
+ - Nginx
+tags:
+ - 反向代理
+ - Nginx
+---
+
 ### 问题1:Nginx是用来干嘛的?
 
 Nginx是一个高性能的HTTP和反向代理服务器，这个基本是用来前端服务器集群后做负载均衡和动静分离用的。

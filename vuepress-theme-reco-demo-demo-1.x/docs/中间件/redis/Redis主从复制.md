@@ -1,3 +1,13 @@
+---
+title: Redis主从复制
+date: 2022-04-25
+categories:
+ - Redis
+tags:
+ - Redis
+ - 主从复制
+---
+
 ### Redis的主从复制原理总结
 
 `Redis的主从复制解决了高并发下Redis读压力特别大的情况，主服务器负责写入，但是读操作可以分配到从服务器中。`

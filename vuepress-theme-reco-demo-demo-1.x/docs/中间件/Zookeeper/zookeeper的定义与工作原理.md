@@ -1,5 +1,5 @@
 ---
-title: Zookeeper原理
+title: Zookeeper定义
 date: 2022-04-07
 categories:
  - Zookeeper

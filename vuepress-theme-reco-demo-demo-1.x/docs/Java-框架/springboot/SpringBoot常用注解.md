@@ -1,3 +1,12 @@
+---
+title: SpringBoot常用注解
+date: 2022-03-23
+categories:
+ - SpringBoot
+tags:
+ - SprintBoot
+---
+
 pring boot中，摒弃了spring以往项目中大量繁琐的配置，遵循`约定大于配置`的原则，通过自身默认配置，极大的降低了项目搭建的复杂度。同样在spring boot中，大量注解的使用，使得代码看起来更加简洁，提高开发的效率。这些注解不光包括spring boot自有，也有一些是继承自spring的。
 
 本文中将spring boot项目中常用的一些核心注解归类总结，并结合实际使用的角度来解释其作用。

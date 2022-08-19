@@ -1,3 +1,12 @@
+---
+title: SpringMVC
+date: 2022-03-21
+categories:
+ - SSM
+tags:
+ - SSM
+---
+
 SpringMVC分离了控制器、模型对象、分派器以及处理程序对象的角色，这种分离让他们更容易进行定制。
 
 * Spring的MVC框架主要由DispatchServlet、处理器映射、处理器（控制器）、视图解析器、视图组成。

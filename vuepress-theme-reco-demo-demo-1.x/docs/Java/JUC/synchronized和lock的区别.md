@@ -1,3 +1,13 @@
+---
+title: synchronized和lock的区别
+date: 2022-03-04
+categories:
+ - JUC
+tags:
+ - lock
+ - JUC
+---
+
 ### synchronized和lock的区别？
 
 1、synchronized是Java关键字级别的锁，在JDK1.6之前，synchronized锁的实现都是借助于调用操作系统的一些方法来实现的，而调用操作系统的方法，就难免导致计算机在用户态和核心态之间的频繁切换，会影响性能；而Lock是Java对象级别的锁，在进行调用时与操作系统无关，性能更好；

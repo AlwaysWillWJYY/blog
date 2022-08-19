@@ -1,3 +1,12 @@
+---
+title: GET 和 POST
+date: 2022-05-13
+categories:
+ - 计算机网络
+tags:
+ - 计算机网络
+---
+
 ### GET 和 POST
 
 1、定义

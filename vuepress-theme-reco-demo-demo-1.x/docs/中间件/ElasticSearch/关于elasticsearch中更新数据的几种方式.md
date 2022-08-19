@@ -1,3 +1,13 @@
+---
+title: ES更新数据
+date: 2022-04-12
+categories:
+ - ES
+tags:
+ - ES
+---
+
+
 做为一个成熟的框架，Elasticsearch里面提供了丰富的操做数据的api，本篇咱们就来学习一下在es中更新数据的几种方式
 
 ### （一）更新文档json

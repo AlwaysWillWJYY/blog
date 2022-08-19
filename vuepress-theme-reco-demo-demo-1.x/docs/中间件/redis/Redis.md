@@ -1,3 +1,12 @@
+---
+title: Redis简介
+date: 2022-04-22
+categories:
+ - Redis
+tags:
+ - Redis
+---
+
 ### Redis特点
 
 1、非关系型的键值对数据库，可以根据键以O（1）的时间复杂度取出或插入关联值；

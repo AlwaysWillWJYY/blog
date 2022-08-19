@@ -1,3 +1,13 @@
+---
+title: Redis线程模型
+date: 2022-04-23
+categories:
+ - Redis
+tags:
+ - Redis
+ - 线程
+---
+
 * 文件事件处理器（file event handler）
 
 1、Redis基于Reactor模式开发自己的网络事件处理器：这个处理器被称为文件事件处理器（file event handler）

@@ -1,3 +1,13 @@
+---
+title: Spring中的Bean
+date: 2022-03-21
+categories:
+ - SSM
+tags:
+ - SSM
+ - Spring
+---
+
 ### 1、工厂模式解耦
 
 第一步：创建bean.properties配置文件：把将来需要通过反射机制创建的业务层bean对象service和持久层对象dao的全限定类名以key-value的形式写入到配置文件中；

@@ -1,3 +1,12 @@
+---
+title: 分布式Session的解决方案
+date: 2022-03-31
+categories:
+ - 分布式
+tags:
+ - 分布式
+---
+
 ### 分布式session的解决方案：
 
 分布式部署出现的session问题：

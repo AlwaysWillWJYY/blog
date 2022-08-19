@@ -1,6 +1,6 @@
 ---
 title: 关于我
-date: 2022-03-20
+date: 2022-03-01
 subSidebar: true
 sidebarDepth: 2
 permalink: /about.html
@@ -15,6 +15,8 @@ permalink: /about.html
 ### 个人信息
 
 计算机硕士在读,研究方向：人工智能,漏洞检测
+
+工作方向：研发岗
 
 ### 主题
 

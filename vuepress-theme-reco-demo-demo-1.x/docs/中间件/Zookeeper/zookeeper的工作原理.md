@@ -1,3 +1,12 @@
+---
+title: Zookeeper原理
+date: 2022-04-07
+categories:
+ - Zookeeper
+tags:
+ - 中间件
+---
+
 ### 1、Zookeeper的角色
 
 » 领导者（leader），负责进行投票的发起和决议，更新系统状态

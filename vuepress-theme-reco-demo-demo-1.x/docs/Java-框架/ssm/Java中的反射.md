@@ -1,3 +1,12 @@
+---
+title: Java的反射技术
+date: 2022-03-20
+categories:
+ - SSM
+tags:
+ - SSM
+---
+
 ### 1、获取Class对象的方式（3种）
 
 `方式一`：通过Object类中的getClass()方法（先创建对象，根据对象获得class）

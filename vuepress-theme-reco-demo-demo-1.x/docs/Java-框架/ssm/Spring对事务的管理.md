@@ -1,3 +1,14 @@
+---
+title: Spring对事务的管理
+date: 2022-03-20
+categories:
+ - SSM
+tags:
+ - SSM
+ - Spring
+---
+
+
 ### 一、什么是事务？
 
 事务（transaction），一般是指要做的或者所做的事情。在计算机术语中是指访问并可能更新数据库中各种数据项的一个程序执行单元（Unit）。事务通常由高级数据库操作语言或编程语言（如SQL、C++或Java）来书写。事务由事务开始（begin transaction）和事务结束（end transaction）之间执行的全体操作组成。

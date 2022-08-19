@@ -1,3 +1,12 @@
+---
+title: Nginx简述
+date: 2022-04-18
+categories:
+ - Nginx
+tags:
+ - Nginx
+---
+
 ### 1、Nginx 的简介
 
 Nginx 是由俄罗斯人 Igor Sysoev 设计开发的，开发工作从2002 年开始，第一次公开发布在 2004 年 10 月 4 日。

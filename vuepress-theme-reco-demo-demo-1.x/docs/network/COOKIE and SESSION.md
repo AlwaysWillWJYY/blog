@@ -1,3 +1,12 @@
+---
+title: Cookie和Session
+date: 2022-05-12
+categories:
+ - 计算机网络
+tags:
+ - 计算机网络
+---
+
 ### Cookie和session的区别
 
 cookie是服务器颁发给客户端浏览器的凭证，存储在客户端

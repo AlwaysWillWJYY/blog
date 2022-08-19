@@ -1,3 +1,13 @@
+---
+title: Spring中的两种代理
+date: 2022-03-20
+categories:
+ - SSM
+tags:
+ - SSM
+ - Spring
+---
+
 Spring的两种动态代理方式：JDK和Cglib
 
 ### 一、原理区别

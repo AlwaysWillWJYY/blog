@@ -1,3 +1,12 @@
+---
+title: Docker常见面试
+date: 2022-04-10
+categories:
+ - Docker
+tags:
+ - Docker
+---
+
 ### 1.什么Docker
 
 Docker是一个容器化平台，它以容器的形式将您的应用程序及其所有依赖项打包在一起，以确保您的应用程序在任何环境中无缝运行。

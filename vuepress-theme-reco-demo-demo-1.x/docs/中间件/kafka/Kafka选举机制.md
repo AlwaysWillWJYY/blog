@@ -1,3 +1,14 @@
+---
+title: Kafka选举机制
+date: 2022-04-15
+categories:
+ - 消息队列
+tags:
+ - 消息队列
+ - Kafka
+ - 选举机制
+---
+
 ### 知道leader选举的设计和策略kafka的高可用设计，具体选举的过程如何？
 
 最简单最直观的方案是，leader在zk上创建一个临时节点，所有Follower对此节点注册监听，当leader宕机时，此时ISR里的所有Follower都尝试创建该节点，而创建成功者（Zookeeper保证只有一个能创建成功）即是新的Leader，其它Replica即为Follower。

@@ -1,3 +1,13 @@
+---
+title: BIO-NIO
+date: 2022-03-02
+categories:
+ - Java-SE
+tags:
+ - Java-SE
+ - BIO-NIO
+---
+
 ### 什么是JavaNIO？
 
 NIO（Non-Blocking I/O,java中,也称为New I/O），是一种同步非阻塞的I/O模型，也是I/O多路复用的基础，已经被越来越多地应用到大型应用服务器,是解决高并发、I/O处理问题的有效方式。

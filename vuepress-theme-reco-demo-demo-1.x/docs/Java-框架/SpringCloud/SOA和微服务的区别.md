@@ -1,3 +1,12 @@
+---
+title: SOA和微服务的区别
+date: 2022-03-28
+categories:
+ - SpringCloud
+tags:
+ - SpringCloud
+---
+
 * 1、SOA喜欢重用，微服务喜欢重写
 
 SOA的主要目的是为了企业各个系统更加容易地融合在一起。 说到SOA不得不说ESB(EnterpriseService Bus)。 ESB是什么? 可以把ESB想象成一个连接所有企业级服务的脚手架。

@@ -1,3 +1,13 @@
+---
+title: SpringBoot
+date: 2022-03-21
+categories:
+ - SSM
+tags:
+ - SSM
+ - SprintBoot
+---
+
 ### 项目中为什么使用SpringBoot？
 
 1、SpringBoot开箱即用，无需繁琐的配置，但同时SpringBoot也允许修改默认的配置来满足特定的需求；

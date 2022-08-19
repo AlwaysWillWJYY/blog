@@ -1,3 +1,13 @@
+---
+title: Redis高级
+date: 2022-04-23
+categories:
+ - Redis
+tags:
+ - Redis
+ - 集群
+---
+
 ### 主题
 
 Redis主从复制、哨兵机制、Redis集群

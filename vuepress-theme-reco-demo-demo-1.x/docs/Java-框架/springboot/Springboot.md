@@ -1,3 +1,12 @@
+---
+title: SpringBoot启动
+date: 2022-03-23
+categories:
+ - SpringBoot
+tags:
+ - SprintBoot
+---
+
 ## SpringBoot启动流程图
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/bd141953f5ff4bd2ab174b602fa8a4b2.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAbGVlZGNvZGVKb2huMDE=,size_20,color_FFFFFF,t_70,g_se,x_16)

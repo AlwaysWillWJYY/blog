@@ -1,3 +1,13 @@
+---
+title: Reentrantlock
+date: 2022-03-04
+categories:
+ - JUC
+tags:
+ - Reentrantlock
+ - JUC
+---
+
 ### 为什么有了synchronized还需要有reentrantlock？
 
 JDK1.6之后才有reentrantlock

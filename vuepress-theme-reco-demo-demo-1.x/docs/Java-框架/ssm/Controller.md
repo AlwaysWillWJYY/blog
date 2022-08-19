@@ -1,3 +1,13 @@
+---
+title: Controller为什么是单例模式
+date: 2022-03-19
+categories:
+ - SSM
+tags:
+ - SSM
+---
+
+
 ### @Controller为什么是单例模式
 
 1、不要在Controller中定义成员变量；

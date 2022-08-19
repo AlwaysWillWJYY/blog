@@ -1,3 +1,12 @@
+---
+title: AOP
+date: 2022-03-19
+categories:
+ - SSM
+tags:
+ - SSM
+---
+
 ### OOP的新生机
 
 ### OOP新生机前夕

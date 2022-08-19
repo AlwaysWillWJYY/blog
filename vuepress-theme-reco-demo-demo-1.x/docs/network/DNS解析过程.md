@@ -1,3 +1,12 @@
+---
+title: DNS解析过程
+date: 2022-05-13
+categories:
+ - 计算机网络
+tags:
+ - 计算机网络
+---
+
 ### DNS解析过程
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/74cac88facd1489aaa7cc8ba0b1be5c6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAbGVlZGNvZGVKb2huMDE=,size_19,color_FFFFFF,t_70,g_se,x_16)

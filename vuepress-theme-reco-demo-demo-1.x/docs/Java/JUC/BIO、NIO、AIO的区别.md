@@ -1,3 +1,13 @@
+---
+title: BIO、NIO、AIO区别
+date: 2022-03-03
+categories:
+ - JUC
+tags:
+ - BIO、NIO、AIO
+ - JUC
+---
+
 ### 1、同步
 
 Java自己去处理IO。

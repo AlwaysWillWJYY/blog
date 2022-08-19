@@ -1,3 +1,12 @@
+---
+title: SpringSecurity的SecurityFilterChain的构建
+date: 2022-03-26
+categories:
+ - SpringSecurity
+tags:
+ - SpringSecurity
+---
+
 在第一篇说Spring Security的整体布局的时候就提及Spring Security嵌入Servlet的核心Bean为一个名称为 springSecurityFilterChain 的过滤器。该过滤器是Spring Security的核心入口。
 
 无论何种方式的Web应用，Spring Security都是从IOC中获取“springSecurityFilterChain”的，这个Bean的注册入口只有一个,在类WebSecurityConfiguration中，该配置对象由注解@EnableWebSecurity开启

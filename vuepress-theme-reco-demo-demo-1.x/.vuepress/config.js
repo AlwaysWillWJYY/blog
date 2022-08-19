@@ -153,6 +153,18 @@ module.exports = {
     search: true,
     searchMaxSuggestions: 5,
     subSidebar: 'auto',
+    sidebar:'auto',
+    // sidebar: [{
+    //   //组名
+    //   title:'数据库',
+    //   //是否可折叠
+    //   collapstable:false,
+    //   //组成员
+    //   children:[
+    //     //组菜单栏
+    //     '/',
+    //   ],
+    // }],
     sidebarDepth: 4,
     lastUpdated: 'Last Updated',
     author: 'AuraroJ',
