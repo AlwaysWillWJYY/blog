@@ -1,0 +1,107 @@
+---
+title: 消息队列之Kafka
+date: 2022-04-13
+categories:
+ - 中间件
+tags:
+ - 消息队列
+ - Kafka
+---
+
+### 1、项目中如何应对高并发的问题？
+
+* 使用Redis缓存，当某一个帖子被发布出来，可能会有大量的用户同时进行点赞关注等操作，此时需要使用Redis对数据进行缓存，防止一次性有大量的数据抵达数据库，造成数据库的压力；
+
+* 系统通知会频繁大量的发布和处理，所以使用kafka消息队列进行处理；
+
+Kafka支持多个生产者发布消息，和多个消费者消费消息，
+
+kafka允许消费者不实时的对消息进行处理，并且kafka允许对不同主题的消息设置单独的保留时间，以满足不同消费者的需求，Kafka会将消息持久化到磁盘中，可以保证消息不会丢失。
+
+kafka可以横向拓展生产者，消费者和Broker，卡夫卡可以轻松处理巨大的消息流。
+
+**卡夫卡中的术语解释：**
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/42e0fd824bf643fdbc9bfe79c6e1374f.png)
+
+1、Broker：kafka集群中包含多个服务器，服务器的节点称为broker
+
+broker存储topic
+
+1）如果某个topic有N个partition，集群有N个Broker，那么每个Broker存储该topic的一个partition；
+
+2）如果某个topic有N个partition，集群有（N+M）个Broker，那么其中有N个Broker存储该topic的一个partition，剩下的M个Broker不存储该topic的partition数据；
+
+3）如果某个topic有N个partition，集群中的Broker数量少于N个，那么一个Broker可能会存储该topic的多个partition。要避免这种情况的发生，导致kafka集群数据不均衡；
+
+2、Topic
+
+每条发布到卡夫卡集群的消息都有一个类别，这个类别被称为topic。（物理上不同topic的消息分开存储，逻辑上一个topic的消息虽然保存于一个或者多个Broker上，但用户只需指定消息的topic即可生产或者消费数据而不必关心数据存于何处）；
+
+类似于数据库的表名
+
+3、Partition
+
+topic中的数据分割为一个或者多个partition。每个topic至少有一个partition。每个partition中的数据使用多个segment文件存储。
+
+4、Leader
+
+每个partition有多个副本，其中有且仅有一个作为Leader，leader是当前负责数据的读写的partition；
+
+5、Follower跟随Leader，所有写请求都通过Leader路由，数据变更会广播给所有Follower，Follower与Leader保持数据同步，如果Leader失效，则从Follower中挑选一个新的Leader。当Follower与Leader挂调、卡住或者同步太慢，Leader会把这个Follower从“in sync replicas”（ISR）列表中删除，重新创建一个Follower。
+
+6、Offset
+
+kafka的存储文件都是按照offset.kafka来命名，用offset作名字的好处就是方便查找。例如你想查找位于2049的位置，只需找到2048.kafka的文件即可。当然，the first offset就是0000 0000 0000.kafka。
+
+### kafka的架构
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/0b77499903384cc8b51c2611612f5089.png)
+
+如上图所示，一个典型的Kafka集群中包含若干Producer（可以是web前端产生的Page View，或者是服务器日志，系统CPU、Memory等），若干broker（Kafka支持水平扩展，一般broker数量越多，集群吞吐率越高），若干Consumer Group，以及一个Zookeeper集群。Kafka通过Zookeeper管理集群配置，选举leader，以及在Consumer Group发生变化时进行rebalance。Producer使用push模式将消息发布到broker，Consumer使用pull模式从broker订阅并消费消息。
+
+### kafka的分布式模型
+
+Kafka每个主题的多个分区日志分布式地存储在Kafka集群上，同时为了故障容错，每个分区都会以副本的方式复制到多个消息代理节点上。其中一个节点会作为主副本（Leader），其他节点作为备份副本（Follower，也叫作从副本）。主副本会负责所有的客户端读写操作，备份副本仅仅从主副本同步数据。当主副本出现故障时，备份副本中的一个副本会被选择为新的主副本。因为每个分区的副本中只有主副本接受读写，所以每个服务器端都会作为某些分区的主副本，以及另外一些分区的备份副本，这样Kafka集群的所有服务端整体上对客户端是负载均衡的。
+
+**Kafka的生产者和消费者相对于服务器端而言都是客户端。**
+
+`Kafka生产者客户端发布消息到服务端的指定主题，会指定消息所属的分区`。生产者发布消息时根据消息是否有键，采用不同的分区策略。消息没有键时，通过轮询方式进行客户端负载均衡；消息有键时，根据分区语义（例如hash）确保相同键的消息总是发送到同一分区。
+
+`Kafka的消费者通过订阅主题来消费消息，并且每个消费者都会设置一个消费组名称`。因为生产者发布到主题的每一条消息都只会发送给消费者组的一个消费者。所以，如果要实现传统消息系统的“队列”模型，可以让每个消费者都拥有相同的消费组名称，这样消息就会负责均衡到所有的消费者；如果要实现“发布-订阅”模型，则每个消费者的消费者组名称都不相同，这样每条消息就会广播给所有的消费者。
+
+分区是消费者现场模型的最小并行单位。如下图（图1）所示，生产者发布消息到一台服务器的3个分区时，只有一个消费者消费所有的3个分区。在下图（图2）中，3个分区分布在3台服务器上，同时有3个消费者分别消费不同的分区。假设每个服务器的吞吐量是300MB，在下图（图1）中分摊到每个分区只有100MB，而在下图（图2）中，集群整体的吞吐量有900MB。可以看到，`增加服务器节点会提升集群的性能，增加消费者数量会提升处理性能`。
+
+同一个消费组下多个消费者互相协调消费工作，Kafka会将所有的分区平均地分配给所有的消费者实例，这样每个消费者都可以分配到数量均等的分区。Kafka的消费组管理协议会动态地维护消费组的成员列表，当一个新消费者加入消费者组，或者有消费者离开消费组，都会触发再平衡操作。
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/c7b8e8a815c7409ea9f215a7a46cda34.png)
+
+`Kafka的消费者消费消息时，只保证在一个分区内的消息的完全有序性，并不保证同一个主题汇中多个分区的消息顺序`.而且，消费者读取一个分区消息的顺序和生产者写入到这个分区的顺序是一致的。比如，生产者写入“hello”和“Kafka”两条消息到分区P1，则消费者读取到的顺序也一定是“hello”和“Kafka”。如果业务上需要保证所有消息完全一致，只能通过设置一个分区完成，但这种做法的缺点是最多只能有一个消费者进行消费.`一般来说，只需要保证每个分区的有序性，再对消息假设键来保证相同键的所有消息落入同一分区，就可以满足绝大多数的应用。`
+
+### Topic和Partition
+
+Topic在逻辑上可以被认为是一个queue，每条消费都必须指定它的Topic，可以简单理解为必须指明把这条消息放进哪个queue里。为了使得Kafka的吞吐率可以线性提高，物理上把Topic分成一个或多个Partition，每个Partition在物理上对应一个文件夹，该文件夹下存储这个Partition的所有消息和索引文件。创建一个topic时，同时可以指定分区数目，分区数越多，其吞吐量也越大，但是需要的资源也越多，同时也会导致更高的不可用性，`kafka在接收到生产者发送的消息之后，会根据均衡策略将消息存储到不同的分区中。因为每条消息都被append到该Partition中，属于顺序写磁盘，因此效率非常高（经验证，顺序写磁盘效率比随机写内存还要高，这是Kafka高吞吐率的一个很重要的保证）。`
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/de55bf2ca472457c978ce75872e7783c.png)
+
+对于传统的message queue而言，一般会删除已经被消费的消息，而Kafka集群会保留所有的消息，无论其被消费与否。当然，因为磁盘限制，不可能永久保留所有数据（实际上也没必要），因此Kafka提供两种策略删除旧数据。一是基于时间，二是基于Partition文件大小。
+
+因为Kafka读取特定消息的时间复杂度为O(1)，即与文件大小无关，所以这里删除过期文件与提高Kafka性能无关。选择怎样的删除策略只与磁盘以及具体的需求有关。另外，Kafka会为每一个Consumer Group保留一些metadata信息——当前消费的消息的position，也即offset。这个offset由Consumer控制。正常情况下Consumer会在消费完一条消息后递增该offset。当然，Consumer也可将offset设成一个较小的值，重新消费一些消息。因为offet由Consumer控制,`所以Kafka broker是无状态的，它不需要标记哪些消息被哪些消费过，也不需要通过broker去保证同一个Consumer Group只有一个Consumer能消费某一条消息，因此也就不需要锁机制，这也为Kafka的高吞吐率提供了有力保障。`
+
+### Producer消息路由
+
+`Producer发送消息到broker时，会根据Paritition机制选择将其存储到哪一个Partition`.如果Partition机制设置合理，所有消息可以均匀分布到不同的Partition里，这样就实现了负载均衡。如果一个Topic对应一个文件，那这个文件所在的机器I/O将会成为这个Topic的性能瓶颈，而有了Partition后，不同的消息可以并行写入不同broker的不同Partition里，极大的提高了吞吐率。可以在$KAFKA_HOME/config/server.properties中通过配置项num.partitions来指定新建Topic的默认Partition数量，也可在创建Topic时通过参数指定，同时也可以在Topic创建之后通过Kafka提供的工具修改。
+
+`在发送一条消息时，可以指定这条消息的key，Producer根据这个key和Partition机制来判断应该将这条消息发送到哪个Parition。`Paritition机制可以通过指定Producer的paritition. class这一参数来指定，该class必须实现kafka.producer.Partitioner接口。
+
+### Consumer Group
+
+使用Consumer high level API时，同一Topic的一条消息只能被同一个Consumer Group内的一个Consumer消费，但多个Consumer Group可同时消费这一消息。
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/07e44b18d6134ba686299c0284312228.png)
+
+这是Kafka用来实现一个Topic消息的广播（发给所有的Consumer）和单播（发给某一个Consumer）的手段。一个Topic可以对应多个Consumer Group。如果需要实现广播，只要每个Consumer有一个独立的Group就可以了。要实现单播只要所有的Consumer在同一个Group里。用Consumer Group还可以将Consumer进行自由的分组而不需要多次发送消息到不同的Topic。
+
+实际上，Kafka的设计理念之一就是同时提供离线处理和实时处理。根据这一特性，可以使用Storm这种实时流处理系统对消息进行实时在线处理，同时使用Hadoop这种批处理系统进行离线处理，还可以同时将数据实时备份到另一个数据中心，只需要保证这三个操作所使用的Consumer属于不同的Consumer Group即可。
+
+

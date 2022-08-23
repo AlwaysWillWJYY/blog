@@ -1,0 +1,18 @@
+{
+  "name": "vuepress-theme-reco-demo",
+  "version": "1.0.0",
+  "author": "reco_luan",
+  "scripts": {
+    "dev": "vuepress dev . --open --host \"localhost\"",
+    "build": "vuepress build ."
+  },
+  "devDependencies": {
+    "vuepress": "1.8.2",
+    "vuepress-plugin-sakura": "^1.2.1",
+    "vuepress-theme-reco": "1.6.14"
+  },
+  "dependencies": {
+    "vuepress-plugin-cursor-effects": "^1.1.4",
+    "vuepress-plugin-ribbon": "^1.1.4"
+  }
+}
