@@ -2,7 +2,7 @@
 title: Redis主从复制
 date: 2022-04-25
 categories:
- - Redis
+ - 中间件
 tags:
  - Redis
  - 主从复制

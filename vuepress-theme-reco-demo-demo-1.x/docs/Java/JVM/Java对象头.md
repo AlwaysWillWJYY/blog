@@ -2,7 +2,7 @@
 title: Java对象头
 date: 2022-03-12
 categories:
- - JVM
+ - Java
 tags:
  - JVM
 ---

@@ -2,7 +2,7 @@
 title: ThreadLocal
 date: 2022-03-15
 categories:
- - JVM
+ - Java
 tags:
  - JVM
 ---

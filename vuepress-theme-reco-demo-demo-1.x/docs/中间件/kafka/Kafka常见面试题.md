@@ -2,7 +2,7 @@
 title: Kafka常见面试题
 date: 2022-04-14
 categories:
- - 消息队列
+ - 中间件
 tags:
  - 消息队列
  - Kafka

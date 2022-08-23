@@ -2,7 +2,7 @@
 title: Controller为什么是单例模式
 date: 2022-03-19
 categories:
- - SSM
+ - Java框架
 tags:
  - SSM
 ---

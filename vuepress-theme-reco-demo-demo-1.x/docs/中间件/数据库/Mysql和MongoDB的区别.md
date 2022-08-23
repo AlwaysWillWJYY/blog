@@ -2,7 +2,7 @@
 title: MySQL和MongoDB的区别
 date: 2022-04-08
 categories:
- - 数据库
+ - 中间件
 tags:
  - Mysql
 ---

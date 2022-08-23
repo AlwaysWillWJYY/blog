@@ -2,7 +2,7 @@
 title: Redis高级
 date: 2022-04-23
 categories:
- - Redis
+ - 中间件
 tags:
  - Redis
  - 集群

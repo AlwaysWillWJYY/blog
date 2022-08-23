@@ -2,7 +2,7 @@
 title: Redis线程模型
 date: 2022-04-23
 categories:
- - Redis
+ - 中间件
 tags:
  - Redis
  - 线程

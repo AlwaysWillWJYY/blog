@@ -2,7 +2,7 @@
 title: MySQL中的连接
 date: 2022-04-10
 categories:
- - 数据库
+ - 中间件
 tags:
  - Mysql
 ---

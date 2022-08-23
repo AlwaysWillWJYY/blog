@@ -2,7 +2,7 @@
 title: Drop-truncnte
 date: 2022-04-07
 categories:
- - 数据库
+ - 中间件
 tags:
  - Mysql
 ---

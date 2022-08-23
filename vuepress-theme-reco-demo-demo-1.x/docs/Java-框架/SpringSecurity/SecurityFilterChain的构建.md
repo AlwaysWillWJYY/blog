@@ -2,7 +2,7 @@
 title: SpringSecurity的SecurityFilterChain的构建
 date: 2022-03-26
 categories:
- - SpringSecurity
+ - Java框架
 tags:
  - SpringSecurity
 ---

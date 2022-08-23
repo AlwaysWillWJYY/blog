@@ -2,7 +2,7 @@
 title: JVM调优
 date: 2022-03-14
 categories:
- - JVM
+ - Java
 tags:
  - JVM
 ---

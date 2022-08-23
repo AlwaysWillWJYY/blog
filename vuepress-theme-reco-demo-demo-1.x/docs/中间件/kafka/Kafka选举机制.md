@@ -2,7 +2,7 @@
 title: Kafka选举机制
 date: 2022-04-15
 categories:
- - 消息队列
+ - 中间件
 tags:
  - 消息队列
  - Kafka

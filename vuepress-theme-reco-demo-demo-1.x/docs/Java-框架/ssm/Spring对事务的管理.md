@@ -2,7 +2,7 @@
 title: Spring对事务的管理
 date: 2022-03-20
 categories:
- - SSM
+ - Java框架
 tags:
  - SSM
  - Spring

@@ -2,7 +2,7 @@
 title: Reentrantlock
 date: 2022-03-04
 categories:
- - JUC
+ - Java
 tags:
  - Reentrantlock
  - JUC

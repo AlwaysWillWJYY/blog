@@ -2,7 +2,7 @@
 title: Nginx负载均衡
 date: 2022-04-18
 categories:
- - Nginx
+ - 中间件
 tags:
  - 负载均衡
  - Nginx

@@ -2,7 +2,7 @@
 title: volatile关键字
 date: 2022-03-05
 categories:
- - JUC
+ - Java
 tags:
  - 内存模型
  - JUC

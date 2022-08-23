@@ -2,7 +2,7 @@
 title: SpringBoot自动装配
 date: 2022-03-24
 categories:
- - SpringBoot
+ - Java框架
 tags:
  - SprintBoot
 ---

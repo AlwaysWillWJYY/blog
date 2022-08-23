@@ -2,7 +2,7 @@
 title: Zookeeper定义
 date: 2022-04-07
 categories:
- - Zookeeper
+ - 中间件
 tags:
  - 中间件
 ---

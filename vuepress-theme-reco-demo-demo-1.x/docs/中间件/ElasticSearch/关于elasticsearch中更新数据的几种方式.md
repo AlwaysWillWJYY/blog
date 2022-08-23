@@ -2,7 +2,7 @@
 title: ES更新数据
 date: 2022-04-12
 categories:
- - ES
+ - 中间件
 tags:
  - ES
 ---

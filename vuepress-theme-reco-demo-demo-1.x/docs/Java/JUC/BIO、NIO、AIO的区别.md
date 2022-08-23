@@ -2,7 +2,7 @@
 title: BIO、NIO、AIO区别
 date: 2022-03-03
 categories:
- - JUC
+ - Java
 tags:
  - BIO、NIO、AIO
  - JUC

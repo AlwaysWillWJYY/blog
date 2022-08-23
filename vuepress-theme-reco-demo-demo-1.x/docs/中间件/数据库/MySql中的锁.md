@@ -2,7 +2,7 @@
 title: MySQL中的锁
 date: 2022-04-11
 categories:
- - 数据库
+ - 中间件
 tags:
  - Mysql
  - Mysql锁

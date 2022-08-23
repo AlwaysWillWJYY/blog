@@ -2,7 +2,7 @@
 title: class常量池
 date: 2022-03-10
 categories:
- - JVM
+ - Java
 tags:
  - JVM
 ---

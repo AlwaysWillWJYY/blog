@@ -2,7 +2,7 @@
 title: InnoDB和MyISAM的区别
 date: 2022-04-07
 categories:
- - 数据库
+ - 中间件
 tags:
  - Mysql
 ---

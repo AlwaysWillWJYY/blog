@@ -2,7 +2,7 @@
 title: G1和CMS
 date: 2022-03-11
 categories:
- - JVM
+ - Java
 tags:
  - JVM
 ---

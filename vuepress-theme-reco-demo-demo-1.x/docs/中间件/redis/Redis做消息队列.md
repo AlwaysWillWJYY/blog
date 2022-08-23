@@ -2,7 +2,7 @@
 title: Redis做消息队列
 date: 2022-04-25
 categories:
- - Redis
+ - 中间件
 tags:
  - Redis
  - 消息队列

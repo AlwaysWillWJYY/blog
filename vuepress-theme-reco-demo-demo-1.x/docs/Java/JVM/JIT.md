@@ -2,7 +2,7 @@
 title: JIT
 date: 2022-03-13
 categories:
- - JVM
+ - Java
 tags:
  - JVM
 ---

@@ -2,7 +2,7 @@
 title: MySQL优化
 date: 2022-04-09
 categories:
- - 数据库
+ - 中间件
 tags:
  - Mysql
  - Mysql优化

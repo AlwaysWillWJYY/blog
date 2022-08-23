@@ -2,7 +2,7 @@
 title: JavaIO流中涉及的设计模式
 date: 2022-05-07
 categories:
- - 设计模式
+ - Java
 tags:
  - 设计模式
 ---

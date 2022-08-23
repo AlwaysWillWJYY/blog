@@ -2,7 +2,7 @@
 title: 分布式session
 date: 2022-03-31
 categories:
- - 分布式
+ - Java框架
 tags:
  - 分布式
 ---

@@ -2,7 +2,7 @@
 title: 常考Sql
 date: 2022-04-05
 categories:
- - 数据库
+ - 中间件
 tags:
  - Mysql
  - Sql语句

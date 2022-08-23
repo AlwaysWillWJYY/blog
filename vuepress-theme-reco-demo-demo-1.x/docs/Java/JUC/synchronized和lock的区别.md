@@ -2,7 +2,7 @@
 title: synchronized和lock的区别
 date: 2022-03-04
 categories:
- - JUC
+ - Java
 tags:
  - lock
  - JUC

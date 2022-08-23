@@ -2,7 +2,7 @@
 title: Spring中的两种代理
 date: 2022-03-20
 categories:
- - SSM
+ - Java框架
 tags:
  - SSM
  - Spring

@@ -2,7 +2,7 @@
 title: 消息队列之Kafka
 date: 2022-04-13
 categories:
- - 消息队列
+ - 中间件
 tags:
  - 消息队列
  - Kafka
