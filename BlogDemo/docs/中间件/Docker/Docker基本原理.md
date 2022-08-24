@@ -1,10 +1,7 @@
 ---
 title: Docker基本原理
 date: 2022-04-10
-categories:
- - 中间件
-tags:
- - Docker
+
 ---
 
 Docker是一个开源的软件项目,让用户程序部署在一个相对隔离的环境运行，借此在Linux操作系统上提供一层额外的抽象，以及操作系统层虚拟化的自动管理机制。需要额外指出的是，Docker并不等于容器（containers），Docker只是容器的一种，其他的种类的容器还有Kata container，Rocket container等等。

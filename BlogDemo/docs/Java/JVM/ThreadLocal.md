@@ -1,10 +1,7 @@
 ---
 title: ThreadLocal
 date: 2022-03-15
-categories:
- - Java
-tags:
- - JVM
+
 ---
 
 用来实现相同线程数据共享不同的线程数据隔离，广泛应用于框架之间的用户资源隔离、事务隔离等。

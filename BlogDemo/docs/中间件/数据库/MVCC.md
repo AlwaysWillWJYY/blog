@@ -1,11 +1,7 @@
 ---
 title: MVCC
 date: 2022-04-08
-categories:
- - 中间件
-tags:
- - Mysql
- - 版本控制
+
 ---
 
 ### 一、MVCC介绍

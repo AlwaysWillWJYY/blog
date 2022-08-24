@@ -1,11 +1,6 @@
 ---
 title: JSON
 date: 2022-03-01
-categories:
- - Java
-tags:
- - Java-Web
- - JSON
 ---
 
 ### JavaScript

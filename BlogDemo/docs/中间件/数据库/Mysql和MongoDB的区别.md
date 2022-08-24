@@ -1,10 +1,7 @@
 ---
 title: MySQL和MongoDB的区别
 date: 2022-04-08
-categories:
- - 中间件
-tags:
- - Mysql
+
 ---
 
 ### MySQL和MongoDB的区别？

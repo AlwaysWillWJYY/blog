@@ -1,11 +1,6 @@
 ---
 title: Tomcat
 date: 2022-03-02
-categories:
- - Java
-tags:
- - Java-Web
- - Tomcat
 ---
 
 ### 一、概念

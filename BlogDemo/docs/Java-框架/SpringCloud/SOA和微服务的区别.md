@@ -1,10 +1,7 @@
 ---
 title: SOA和微服务的区别
 date: 2022-03-28
-categories:
- - Java框架
-tags:
- - SpringCloud
+
 ---
 
 * 1、SOA喜欢重用，微服务喜欢重写

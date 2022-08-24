@@ -1,11 +1,7 @@
 ---
 title: Nginx负载均衡
 date: 2022-04-18
-categories:
- - 中间件
-tags:
- - 负载均衡
- - Nginx
+
 ---
 
 ### 1、负载均衡的由来

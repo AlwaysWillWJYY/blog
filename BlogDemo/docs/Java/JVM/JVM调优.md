@@ -1,10 +1,7 @@
 ---
 title: JVM调优
 date: 2022-03-14
-categories:
- - Java
-tags:
- - JVM
+
 ---
 
 ### 对内存的系统级的调优的主要目的是减少GC的频率和Full GC的次数。

@@ -1,11 +1,7 @@
 ---
 title: Kafka三种消费模式
 date: 2022-04-14
-categories:
- - 中间件
-tags:
- - 消息队列
- - Kafka
+
 ---
 
 ### 自动提交offset

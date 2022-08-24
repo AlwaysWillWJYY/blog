@@ -1,10 +1,7 @@
 ---
 title: JIT
 date: 2022-03-13
-categories:
- - Java
-tags:
- - JVM
+
 ---
 
 ### 1、概念

@@ -90,6 +90,7 @@
         <div>9</div>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -98,6 +99,6 @@ export default {
   name: "flexWrap",
   data() {
     return {};
-  },
+  }
 };
 </script>

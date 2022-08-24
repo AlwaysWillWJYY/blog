@@ -1,11 +1,7 @@
 ---
 title: MySQL优化
 date: 2022-04-09
-categories:
- - 中间件
-tags:
- - Mysql
- - Mysql优化
+
 ---
 
 ### 1、SQL语句优化

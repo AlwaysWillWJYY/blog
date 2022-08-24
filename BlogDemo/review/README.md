@@ -11,3 +11,7 @@ permalink: /review.html
 
 <VtimeLine date="2022-03-01" title="开始写博客"/>
 <VtimeLine date="2022-03-10" title="买了第一云服务器"/>
+
+<whirligig/>
+
+<accordion/>

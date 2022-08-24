@@ -1,11 +1,7 @@
 ---
 title: Spring中的Bean
 date: 2022-03-21
-categories:
- - Java框架
-tags:
- - SSM
- - Spring
+
 ---
 
 ### 1、工厂模式解耦

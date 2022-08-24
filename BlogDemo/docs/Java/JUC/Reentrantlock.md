@@ -1,11 +1,7 @@
 ---
 title: Reentrantlock
 date: 2022-03-04
-categories:
- - Java
-tags:
- - Reentrantlock
- - JUC
+
 ---
 
 ### 为什么有了synchronized还需要有reentrantlock？

@@ -1,10 +1,7 @@
 ---
 title: Zookeeper
 date: 2022-04-06
-categories:
- - 中间件
-tags:
- - 中间件
+
 ---
 
 ### 1. ZooKeeper是什么？

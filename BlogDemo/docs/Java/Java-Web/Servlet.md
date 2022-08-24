@@ -1,11 +1,6 @@
 ---
 title: Servlet
 date: 2022-03-01
-categories:
- - Java
-tags:
- - Java-Web
- - Servlet
 ---
 
 ### Servlet：server applet 运行在服务器端的小程序

@@ -1,10 +1,7 @@
 ---
 title: Redis简介
 date: 2022-04-22
-categories:
- - 中间件
-tags:
- - Redis
+
 ---
 
 ### Redis特点

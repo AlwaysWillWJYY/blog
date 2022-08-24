@@ -1,10 +1,7 @@
 ---
 title: SpringBoot面试题
 date: 2022-03-23
-categories:
- - Java框架
-tags:
- - SprintBoot
+
 ---
 
 ## 概述

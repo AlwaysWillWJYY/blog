@@ -1,11 +1,7 @@
 ---
 title: SpringBoot
 date: 2022-03-21
-categories:
- - Java框架
-tags:
- - SSM
- - SprintBoot
+
 ---
 
 ### 项目中为什么使用SpringBoot？

@@ -1,10 +1,7 @@
 ---
 title: 分布式Session的解决方案
 date: 2022-03-31
-categories:
- - Java框架
-tags:
- - 分布式
+
 ---
 
 ### 分布式session的解决方案：

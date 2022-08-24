@@ -1,11 +1,7 @@
 ---
 title: volatile关键字
 date: 2022-03-05
-categories:
- - Java
-tags:
- - 内存模型
- - JUC
+
 ---
 
 ### 一、内存模型的相关概念

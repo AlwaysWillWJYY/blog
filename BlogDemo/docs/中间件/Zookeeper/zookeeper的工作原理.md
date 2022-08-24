@@ -1,10 +1,7 @@
 ---
 title: Zookeeper原理
 date: 2022-04-07
-categories:
- - 中间件
-tags:
- - 中间件
+
 ---
 
 ### 1、Zookeeper的角色

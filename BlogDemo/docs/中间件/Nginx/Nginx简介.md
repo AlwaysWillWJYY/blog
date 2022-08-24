@@ -1,10 +1,7 @@
 ---
 title: Nginx简述
 date: 2022-04-18
-categories:
- - 中间件
-tags:
- - Nginx
+
 ---
 
 ### 1、Nginx 的简介

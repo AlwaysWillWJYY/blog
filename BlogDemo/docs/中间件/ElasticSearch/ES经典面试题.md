@@ -1,10 +1,7 @@
 ---
 title: ES经典面试题
 date: 2022-04-12
-categories:
- - 中间件
-tags:
- - ES
+
 ---
 
 ### 1.为什么要使用Elasticsearch?

@@ -1,11 +1,7 @@
 ---
 title: Redis线程模型
 date: 2022-04-23
-categories:
- - 中间件
-tags:
- - Redis
- - 线程
+
 ---
 
 * 文件事件处理器（file event handler）

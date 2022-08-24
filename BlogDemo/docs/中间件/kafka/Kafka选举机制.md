@@ -1,12 +1,7 @@
 ---
 title: Kafka选举机制
 date: 2022-04-15
-categories:
- - 中间件
-tags:
- - 消息队列
- - Kafka
- - 选举机制
+
 ---
 
 ### 知道leader选举的设计和策略kafka的高可用设计，具体选举的过程如何？

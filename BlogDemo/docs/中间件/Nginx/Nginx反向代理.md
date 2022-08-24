@@ -1,11 +1,7 @@
 ---
 title: Nginx反向代理
 date: 2022-04-17
-categories:
- - 中间件
-tags:
- - 反向代理
- - Nginx
+
 ---
 
 ### 1、代理

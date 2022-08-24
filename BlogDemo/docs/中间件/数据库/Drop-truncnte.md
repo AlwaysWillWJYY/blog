@@ -1,10 +1,7 @@
 ---
 title: Drop-truncnte
 date: 2022-04-07
-categories:
- - 中间件
-tags:
- - Mysql
+
 ---
 
 （1）`Delete语句执行删除的过程是每次从表中删除一行`，并且同时将改行的删除操作作为事务记录在日志中保存起来以便进行回滚操作；

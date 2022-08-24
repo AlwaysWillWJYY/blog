@@ -1,11 +1,7 @@
 ---
 title: 消息队列之Kafka
 date: 2022-04-13
-categories:
- - 中间件
-tags:
- - 消息队列
- - Kafka
+
 ---
 
 ### 1、项目中如何应对高并发的问题？

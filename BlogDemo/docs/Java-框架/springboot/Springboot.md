@@ -1,10 +1,7 @@
 ---
 title: SpringBoot启动
 date: 2022-03-23
-categories:
- - Java框架
-tags:
- - SprintBoot
+
 ---
 
 ## SpringBoot启动流程图

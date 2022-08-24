@@ -1,13 +1,7 @@
 ---
 title: Redis常见缓存问题
 date: 2022-04-22
-categories:
- - 中间件
-tags:
- - Redis
- - 缓存击穿
- - 缓存雪崩
- - 缓存穿透
+
 ---
 
 ### 缓存穿透

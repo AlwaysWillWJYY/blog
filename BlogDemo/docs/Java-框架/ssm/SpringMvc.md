@@ -1,10 +1,7 @@
 ---
 title: SpringMVC
 date: 2022-03-21
-categories:
- - Java框架
-tags:
- - SSM
+
 ---
 
 SpringMVC分离了控制器、模型对象、分派器以及处理程序对象的角色，这种分离让他们更容易进行定制。

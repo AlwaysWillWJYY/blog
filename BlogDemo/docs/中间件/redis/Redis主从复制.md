@@ -1,11 +1,7 @@
 ---
 title: Redis主从复制
 date: 2022-04-25
-categories:
- - 中间件
-tags:
- - Redis
- - 主从复制
+
 ---
 
 ### Redis的主从复制原理总结

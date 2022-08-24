@@ -1,11 +1,7 @@
 ---
 title: Redis集群分片原理及选举流程
 date: 2022-04-24
-categories:
- - 中间件
-tags:
- - Redis
- - 集群
+
 ---
 
 ### Redis集群分片原理及选举流程
