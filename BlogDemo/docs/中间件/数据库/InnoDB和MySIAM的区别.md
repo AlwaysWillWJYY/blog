@@ -1,7 +1,7 @@
 ---
 title: InnoDB和MyISAM的区别
 date: 2022-04-07
-
+publish: false
 ---
 
 ### MySQL中的存储引擎InnoDB和MyISAM的区别？

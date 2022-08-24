@@ -1,7 +1,7 @@
 ---
 title: Nginx常见面试题
 date: 2022-04-17
-
+publish: false
 ---
 
 ### 问题1:Nginx是用来干嘛的?

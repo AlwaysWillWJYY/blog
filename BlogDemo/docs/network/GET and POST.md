@@ -1,10 +1,8 @@
 ---
 title: GET 和 POST
 date: 2022-05-13
-categories:
- - 计算机网络
-tags:
- - 计算机网络
+publish: false
+
 ---
 
 ### GET 和 POST

@@ -1,7 +1,7 @@
 ---
 title: Nginx简述
 date: 2022-04-18
-
+publish: false
 ---
 
 ### 1、Nginx 的简介

@@ -1,6 +1,7 @@
 ---
 title: 常考Sql
 date: 2022-04-05
+publish: false
 ---
 
 ### 基础

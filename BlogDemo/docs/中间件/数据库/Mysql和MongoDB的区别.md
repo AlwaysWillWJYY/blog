@@ -1,7 +1,7 @@
 ---
 title: MySQL和MongoDB的区别
 date: 2022-04-08
-
+publish: false
 ---
 
 ### MySQL和MongoDB的区别？

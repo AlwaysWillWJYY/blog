@@ -1,10 +1,8 @@
 ---
 title: HTTP 和 Servlet
 date: 2022-05-13
-categories:
- - 计算机网络
-tags:
- - 计算机网络
+publish: false
+
 ---
 
 ### HTTP协议

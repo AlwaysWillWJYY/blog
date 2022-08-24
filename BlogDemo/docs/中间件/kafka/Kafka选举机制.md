@@ -1,7 +1,7 @@
 ---
 title: Kafka选举机制
 date: 2022-04-15
-
+publish: false
 ---
 
 ### 知道leader选举的设计和策略kafka的高可用设计，具体选举的过程如何？

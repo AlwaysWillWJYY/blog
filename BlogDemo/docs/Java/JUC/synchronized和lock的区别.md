@@ -1,7 +1,7 @@
 ---
 title: synchronized和lock的区别
 date: 2022-03-04
-
+publish: false
 ---
 
 ### synchronized和lock的区别？

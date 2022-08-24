@@ -1,7 +1,7 @@
 ---
 title: Kafka三种消费模式
 date: 2022-04-14
-
+publish: false
 ---
 
 ### 自动提交offset

@@ -1,7 +1,7 @@
 ---
 title: MySQL中的连接
 date: 2022-04-10
-
+publish: false
 ---
 
 用两个表a_table、b_table，关键字段 a_table.a_id和b_table.b_id来演示一下MySQL内连接、外连接

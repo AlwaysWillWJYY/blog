@@ -1,10 +1,8 @@
 ---
 title: Cookie和Session
 date: 2022-05-12
-categories:
- - 计算机网络
-tags:
- - 计算机网络
+publish: false
+
 ---
 
 ### Cookie和session的区别

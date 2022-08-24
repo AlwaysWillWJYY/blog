@@ -1,7 +1,7 @@
 ---
 title: Spring中的Bean
 date: 2022-03-21
-
+publish: false
 ---
 
 ### 1、工厂模式解耦

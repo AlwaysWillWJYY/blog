@@ -1,7 +1,7 @@
 ---
 title: Nginx反向代理
 date: 2022-04-17
-
+publish: false
 ---
 
 ### 1、代理

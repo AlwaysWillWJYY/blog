@@ -1,7 +1,7 @@
 ---
 title: Java的反射技术
 date: 2022-03-20
-
+publish: false
 ---
 
 ### 1、获取Class对象的方式（3种）

@@ -1,10 +1,8 @@
 ---
 title: HTTP请求头
 date: 2022-05-15
-categories:
- - 计算机网络
-tags:
- - 计算机网络
+publish: false
+
 ---
 
 ## HTTP的请求头

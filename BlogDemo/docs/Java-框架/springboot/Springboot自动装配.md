@@ -1,7 +1,7 @@
 ---
 title: SpringBoot自动装配
 date: 2022-03-24
-
+publish: false
 ---
 
 * springboot一大优势就是省去了很多的配置，也就是说当springboot启动的时候，springboot在内部就已经帮忙封装好了，者其实就是springboot的自动装配操作。

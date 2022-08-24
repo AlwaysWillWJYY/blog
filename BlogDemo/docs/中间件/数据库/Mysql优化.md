@@ -1,7 +1,7 @@
 ---
 title: MySQL优化
 date: 2022-04-09
-
+publish: false
 ---
 
 ### 1、SQL语句优化

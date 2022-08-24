@@ -1,10 +1,8 @@
 ---
 title: HTTP版本
 date: 2022-05-14
-categories:
- - 计算机网络
-tags:
- - 计算机网络
+publish: false
+
 ---
 
 ### HTTP1.0、1.1和2.0的区别？

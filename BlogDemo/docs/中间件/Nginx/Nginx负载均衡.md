@@ -1,7 +1,7 @@
 ---
 title: Nginx负载均衡
 date: 2022-04-18
-
+publish: false
 ---
 
 ### 1、负载均衡的由来

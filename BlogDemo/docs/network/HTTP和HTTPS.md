@@ -1,10 +1,8 @@
 ---
 title: HTTP和HTTPS
 date: 2022-05-14
-categories:
- - 计算机网络
-tags:
- - 计算机网络
+publish: false
+
 ---
 
 ### HTTPS和HTTP的区别？

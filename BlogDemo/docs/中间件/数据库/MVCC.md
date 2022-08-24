@@ -1,7 +1,7 @@
 ---
 title: MVCC
 date: 2022-04-08
-
+publish: false
 ---
 
 ### 一、MVCC介绍

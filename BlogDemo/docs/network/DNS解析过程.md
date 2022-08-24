@@ -1,10 +1,8 @@
 ---
 title: DNS解析过程
 date: 2022-05-13
-categories:
- - 计算机网络
-tags:
- - 计算机网络
+publish: false
+
 ---
 
 ### DNS解析过程
