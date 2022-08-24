@@ -2,7 +2,7 @@
   <div class="home-blog">
     <div class="hero" :style="{ ...bgImageStyle }">
       <div>
-        <ModuleTransition>
+        <!-- <ModuleTransition>
           <img
             class="hero-img"
             v-if="recoShowModule && $frontmatter.heroImage"
@@ -11,13 +11,12 @@
             alt="hero"
           />
         </ModuleTransition>
-
+        -->
         <ModuleTransition delay="0.04">
           <h1 v-if="recoShowModule && $frontmatter.heroText !== null">
             {{ $frontmatter.heroText || $title || "vuePress-theme-reco" }}
           </h1>
         </ModuleTransition>
-
         <ModuleTransition delay="0.08">
           <p
             v-if="recoShowModule && $frontmatter.tagline !== null"
@@ -31,6 +30,7 @@
           </p>
         </ModuleTransition>
       </div>
+      <div class="scroll-down"></div>
     </div>
 
     <ModuleTransition delay="0.16">
@@ -122,7 +122,7 @@ export default defineComponent({
     const bgImageStyle = computed(() => {
       const url = instance.$frontmatter.bgImage
         ? instance.$withBase(instance.$frontmatter.bgImage)
-        : require("../../images/bg.svg");
+        : require("../../images/back.png");
 
       const initBgImageStyle = {
         textAlign: "center",
@@ -176,21 +176,19 @@ export default defineComponent({
     display flex
     align-items center
     justify-content center
-    .hero-img {
-      max-width: 300px;
-      margin: 0 auto 1.5rem
-    }
 
     h1 {
       display: block;
       margin:0 auto 1.8rem;
       font-size: 2.5rem;
+      color: white;
     }
 
     .description {
       margin: 1.8rem auto;
       font-size: 1.6rem;
       line-height: 1.3;
+      color: white;
     }
   }
   .home-blog-wrapper {
@@ -346,6 +344,45 @@ export default defineComponent({
         }
       }
     }
+  }
+}
+</style>
+<style lang="css">
+.hero::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.scroll-down::after {
+  content: "";
+  position: absolute;
+  display: block;
+  bottom: -5 rem;
+  left: calc(50% - 1.5rem);
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 0.25rem solid #fff;
+  border-top: none;
+  border-left: none;
+  transform-origin: 50% 50%;
+  transform: rotate(45deg);
+  -webkit-animation: arrowMove-data 5s infinite;
+  animation: arrowMove-data 5s infinite;
+}
+
+@keyframes arrowMove-data {
+  0% {
+    transform: translateY(0px) rotate(45deg);
+  }
+  100% {
+    transform: translateY(100px) rotate(45deg);
+    border: 0.25rem solid rgba(255, 255, 255, 0.5);
+    border-top: none;
+    border-left: none;
   }
 }
 </style>

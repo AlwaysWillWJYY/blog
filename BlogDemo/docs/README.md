@@ -1,7 +1,7 @@
 ---
 home: true
 heroText: Auraro's Blog
-tagline: 面向对象面向君，不负代码不负卿.
+tagline: 面向对象面向君  不负代码不负卿.
 # heroImage: /back.png
 # heroImageStyle: {
 #   maxHeight: '200px',
@@ -11,11 +11,11 @@ tagline: 面向对象面向君，不负代码不负卿.
 #   boxShadow: '0 5px 18px rgba(0,0,0,0.2)'
 # }
 bgImageStyle: {
-  height: '450px'
+  height: '100vh'
 }
 isShowTitleInHome: false
 actionText: Guide
-actionLink: /zh/guide/
+actionLink: /views/other/guide
 features:
 - title: 关于我
   details: AuroraJ。

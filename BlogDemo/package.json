@@ -11,7 +11,8 @@
     "vuepress-plugin-sakura": "^1.2.1",
     "vuepress-theme-reco": "1.6.14",
     "node-sass": "^4.12.0",
-    "sass-loader": "^7.1.0"
+    "sass-loader": "^7.1.0",
+    "vuepress-theme-jabinblog": "0.0.1"
   },
   "dependencies": {
     "vuepress-plugin-cursor-effects": "^1.1.4",
