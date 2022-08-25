@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[31],{392:function(n,t,a){},462:function(n,t,a){"use strict";a(392)},498:function(n,t,a){"use strict";a.r(t);var e={name:"load5",data:()=>({})},s=(a(462),a(2)),c=Object(s.a)(e,(function(){return(0,this._self._c)("div",{staticClass:"load-container"})}),[],!1,null,"e85891e8",null);t.default=c.exports}}]);
