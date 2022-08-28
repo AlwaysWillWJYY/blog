@@ -357,7 +357,7 @@ function getXiangRoute() {
             children: [
                 {
                     title: '概述',   // 必要的
-                    children: ['MIT6.830']
+                    children: ['']
                 }
             ]
         },
@@ -366,11 +366,11 @@ function getXiangRoute() {
             children: [
                 {
                     title: 'AI对抗平台',   // 必要的
-                    children: ['AI对抗平台']
+                    children: ['']
                 },
                 {
                     title: '球球大作战',   // 必要的
-                    children: ['球球大作战']
+                    children: ['']
                 },
             ]
         },
@@ -379,7 +379,7 @@ function getXiangRoute() {
             children: [
                 {
                     title: '仿北邮人论坛',   // 必要的
-                    children: ['仿北邮人论坛']
+                    children: ['']
                 }
             ]
         },
@@ -394,11 +394,11 @@ function getAlgorithmRoute() {
             children: [
                 {
                     title: '周赛1',   // 必要的
-                    children: ['周赛1/1']
+                    children: ['']
                 },
                 {
                     title: '周赛2',   // 必要的
-                    children: ['周赛2/1']
+                    children: ['']
                 }
             ]
         },
@@ -407,7 +407,7 @@ function getAlgorithmRoute() {
             children: [
                 {
                     title: 'AcWing周赛256',   // 必要的
-                    children: ['周赛1/1']
+                    children: ['']
                 }
             ]
         },
@@ -432,7 +432,7 @@ function getPaperRoute() {
             children: [
                 {
                     title: '漏洞检测',   // 必要的
-                    children: ['漏洞检测']
+                    children: ['']
                 },
             ]
         },
