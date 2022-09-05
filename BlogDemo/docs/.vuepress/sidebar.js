@@ -390,24 +390,41 @@ function getXiangRoute() {
 function getAlgorithmRoute() {
     return [
         {
-            title: 'LeetCode算法题解',
+            title: '提高课算法题解',
             children: [
                 {
-                    title: '周赛1',   // 必要的
-                    children: ['']
+                    title: 'DP',   // 必要的
+                    children: ['提高课/小国王']
                 },
                 {
-                    title: '周赛2',   // 必要的
-                    children: ['']
+                    title: 'DFS',   // 必要的
+                    children: ['笔试题/飞步科技']
                 }
             ]
         },
         {
-            title: 'AcWing算法题解',
+            title: '笔面试算法题解',
             children: [
                 {
-                    title: 'AcWing周赛256',   // 必要的
-                    children: ['']
+                    title: '飞步科技公开笔试',   // 必要的
+                    children: ['笔试题/飞步科技']
+                }
+            ]
+        },
+        {
+            title: '周赛算法题解',
+            children: [
+                {
+                    title: '双周赛',   // 必要的
+                    children: ['周赛/86场双周赛']
+                },
+                {
+                    title: '周赛',   // 必要的
+                    children: ['周赛/309场周赛']
+                },
+                {
+                    title: 'AcWing周赛',   // 必要的
+                    children: ['周赛/86场双周赛']
                 }
             ]
         },
