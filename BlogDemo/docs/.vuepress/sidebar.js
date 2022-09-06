@@ -356,8 +356,8 @@ function getXiangRoute() {
             title: 'MIT6.830',
             children: [
                 {
-                    title: '概述',   // 必要的
-                    children: ['']
+                    title: 'MIT数据库',   // 必要的
+                    children: ['MIT6.830/lab1']
                 }
             ]
         },
@@ -366,11 +366,7 @@ function getXiangRoute() {
             children: [
                 {
                     title: 'AI对抗平台',   // 必要的
-                    children: ['']
-                },
-                {
-                    title: '球球大作战',   // 必要的
-                    children: ['']
+                    children: ['AI对抗平台/综述']
                 },
             ]
         },
@@ -379,7 +375,7 @@ function getXiangRoute() {
             children: [
                 {
                     title: '仿北邮人论坛',   // 必要的
-                    children: ['']
+                    children: ['仿北邮人论坛/综述']
                 }
             ]
         },

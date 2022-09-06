@@ -48,7 +48,6 @@ function getNav() {
                 {
                     text: '游戏项目', items: [
                         {text: 'AI对抗平台 JAVA', link: '/项目/'},
-                        {text: '球球大作战 PYTHON', link: '/项目/'},
                     ]
                 },
                 {
