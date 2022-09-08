@@ -15,14 +15,6 @@ module.exports = {
     ['link', { rel: 'icon', href: '/logo.png' }],
     ['meta', { name: 'viewport', content: 'width=device-width,initial-scale=1,user-scalable=no' }],
     ['meta', { name: 'keywords', content: 'AuraroJ,博客,conimi,nico'}],
-    ['script', {}, `
-      var _hmt = _hmt || [];
-      (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?xxxxxxxxxxxxxxxx"; 
-        var s = document.getElementsByTagName("script")[0]; 
-        s.parentNode.insertBefore(hm, s);
-      })();`],
       // 引入jquery
   ["script", {
     "language": "javascript",
@@ -68,8 +60,6 @@ module.exports = {
     authorAvatar: '/logo.png',
     search: true,
     searchMaxSuggestions: 5,
-    subSidebar: 'auto',
-    sidebar:'auto',
     collapsable: true,
     sidebar: {
       '/Linux/': sidebar.getLinuxRoute(),
@@ -90,7 +80,7 @@ module.exports = {
     //   color: '#42b983', // 登录页动画球的颜色
     //   lineColor: '#42b983' // 登录页动画线的颜色
     // },
-    sidebarDepth: 4,
+    sidebarDepth: 2,
     lastUpdated: 'Last Updated',
     author: 'AuraroJ',
     // 备案号
