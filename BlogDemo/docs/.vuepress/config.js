@@ -10,11 +10,11 @@ module.exports = {
   },
   title: 'Auraro\'s Blog',
   description: '面向对象面向君，不负代码不负卿。',
-  // dest: 'public',
   head: [
     ['link', { rel: 'icon', href: '/logo.png' }],
     ['meta', { name: 'viewport', content: 'width=device-width,initial-scale=1,user-scalable=no' }],
     ['meta', { name: 'keywords', content: 'AuraroJ,博客,conimi,nico'}],
+    ["meta", {name: "apple-mobile-web-app-capable", content: "yes"}],
       // 引入jquery
   ["script", {
     "language": "javascript",
@@ -28,14 +28,20 @@ module.exports = {
     "src": "/js/MouseClickEffect.js"
   }],
   ],
+  theme: "reco",
   markdown: {
     lineNumbers: true,
+    externalLinks: {
+      target: '_blank', rel: 'noopener noreferrer'
+    }
   },
   dest: "docs/.vuepress/dist",
   themeConfig: {
+    author: 'AuraroJ',
     docsDir: 'docs',
+    editLinks: true,
+    subSidebar: 'auto',
     nav: nav.getNav(),
-
     type: 'blog',
     blogConfig: {
       // category: {
@@ -49,9 +55,7 @@ module.exports = {
     },
     codeTheme: 'solarizedlight',
     // 当用户通过滚动查看页面的不同部分时，嵌套的标题链接和 URL 中的 Hash 值会实时更新（默认值：true）（性能优化）
-    activeHeaderLinks: false,
-
-    smoothScroll: true,
+    activeHeaderLinks: true,
     valineConfig: {
       appId: '1HbrYKc61YA2cpKyOIfSjxfr-gzGzoHsz',
       appKey: 'MB0cbJwSejdYlix1AjjLLFRv',
@@ -61,6 +65,7 @@ module.exports = {
     search: true,
     searchMaxSuggestions: 5,
     collapsable: true,
+    sidebarDepth: 2,
     sidebar: {
       '/Linux/': sidebar.getLinuxRoute(),
       '/中间件/': sidebar.getZjjRoute(),
@@ -80,9 +85,7 @@ module.exports = {
     //   color: '#42b983', // 登录页动画球的颜色
     //   lineColor: '#42b983' // 登录页动画线的颜色
     // },
-    sidebarDepth: 2,
     lastUpdated: 'Last Updated',
-    author: 'AuraroJ',
     // 备案号
     // record: '',
     // recordLink: '',
@@ -94,7 +97,6 @@ module.exports = {
         email: '1156743527@qq.com',
         link: 'https://www.recoluan.com'
       }
-      
     ],
   },
     /**
@@ -109,6 +111,10 @@ module.exports = {
      * 'twilight'
      */
   plugins: [
+    ['@vuepress/active-header-links', {
+      sidebarLinkSelector: '.sidebar-link',
+      headerAnchorSelector: '.header-anchor'
+    }],
     ["sakura", {
       num: 20,  // 默认数量
       show: true, //  是否显示
