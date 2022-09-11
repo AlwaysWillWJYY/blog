@@ -357,7 +357,7 @@ function getXiangRoute() {
             children: [
                 {
                     title: 'MIT数据库',   // 必要的
-                    children: ['MIT6.830/lab1','MIT6.830/lab2','MIT6.830/lab3']
+                    children: ['MIT6.830/lab1','MIT6.830/lab2','MIT6.830/lab3','MIT6.830/lab4','MIT6.830/lab5','MIT6.830/lab6']
                 }
             ]
         },
@@ -425,7 +425,7 @@ function getAlgorithmRoute() {
             children: [
                 {
                     title: '面试指南',   // 必要的
-                    children: ['笔试题/打气球的最大分数','笔试题/子数组异或和为0的最大划分','笔试题/字符串的交错组成']
+                    children: ['笔试题/打气球的最大分数','笔试题/子数组异或和为0的最大划分','笔试题/字符串的交错组成','笔试题/龙与地下城游戏问题']
                 },
                 {
                     title: '公司笔试',   // 必要的
