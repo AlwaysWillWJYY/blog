@@ -442,11 +442,11 @@ function getAlgorithmRoute() {
                 },
                 {
                     title: '周赛',   // 必要的
-                    children: ['周赛/309场周赛']
+                    children: ['周赛/309场周赛','周赛/310场周赛']
                 },
                 {
                     title: 'AcWing周赛',   // 必要的
-                    children: ['周赛/86场双周赛']
+                    children: ['周赛/AcWing68场周赛']
                 }
             ]
         },
