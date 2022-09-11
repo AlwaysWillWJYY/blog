@@ -7,14 +7,15 @@
     "build": "vuepress build docs/."
   },
   "devDependencies": {
-    "vuepress": "1.8.2",
-    "vuepress-plugin-sakura": "^1.2.1",
-    "vuepress-theme-reco": "1.6.14",
     "node-sass": "^4.12.0",
     "sass-loader": "^7.1.0",
-    "vuepress-theme-jabinblog": "0.0.1"
+    "vuepress": "1.8.2",
+    "vuepress-plugin-nuggets-style-copy": "^1.0.3",
+    "vuepress-plugin-sakura": "^1.2.1",
+    "vuepress-theme-reco": "1.6.14"
   },
   "dependencies": {
+    "vuepress-plugin-code-copy": "^1.0.6",
     "vuepress-plugin-cursor-effects": "^1.1.4",
     "vuepress-plugin-ribbon": "^1.1.4"
   }

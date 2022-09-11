@@ -133,18 +133,9 @@ module.exports = {
         zIndex: 999999999           // z-index property of the canvas, default: 999999999
       }
     ],
-  // // 评论插件
-  //   ['vuepress-plugin-comment',
-  //   {
-  //     choosen: 'valine', 
-  //     // options选项中的所有参数，会传给Valine的配置
-  //     options: {
-  //       el: '#valine-vuepress-comment',
-  //       appId: 'xxxxxxxxxxxxxxxxxx',
-  //       appKey: 'xxxxxxxxxxxxxx'
-  //     }
-  //   }],
+  
   // 代码复制弹窗插件
+  //npm install -D vuepress-plugin-nuggets-style-copy
     ["vuepress-plugin-nuggets-style-copy", {
       copyText: "copy",
       tip: {
@@ -199,6 +190,7 @@ module.exports = {
       }
   }],
     // 在代码区，添加一个拷贝按钮，用来拷贝代码
+    //npm install vuepress-plugin-code-copy
     ['vuepress-plugin-code-copy', true],
     ['sitemap', {
       hostname: 'https://conimi.com'
