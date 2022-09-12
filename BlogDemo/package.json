@@ -18,6 +18,7 @@
   "dependencies": {
     "vuepress-plugin-code-copy": "^1.0.6",
     "vuepress-plugin-cursor-effects": "^1.1.4",
+    "vuepress-plugin-reading-progress": "^1.0.10",
     "vuepress-plugin-ribbon": "^1.1.4"
   }
 }

@@ -86,6 +86,8 @@ module.exports = {
     //   color: '#42b983', // 登录页动画球的颜色
     //   lineColor: '#42b983' // 登录页动画线的颜色
     // },
+    
+    readingShow: true,
     lastUpdated: 'Last Updated',
     // 备案号
     // record: '',
@@ -139,6 +141,7 @@ module.exports = {
     
     // 在代码区，添加一个拷贝按钮，用来拷贝代码
     //npm install vuepress-plugin-code-copy
-    ["vuepress-plugin-code-copy", true]
+    ["vuepress-plugin-code-copy", true],
+    ['reading-progress']
   ]
 }
