@@ -7,6 +7,7 @@
     "build": "vuepress build docs/."
   },
   "devDependencies": {
+    "@vuepress/plugin-nprogress": "^1.9.7",
     "node-sass": "^4.12.0",
     "sass-loader": "^7.1.0",
     "vuepress": "1.8.2",

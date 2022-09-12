@@ -1,6 +1,7 @@
 const nav = require('./nav');
 
 const sidebar = require('./sidebar');
+
 module.exports = {
   base: '/',
   locales: {
@@ -55,7 +56,7 @@ module.exports = {
     },
     codeTheme: 'solarizedlight',
     // 当用户通过滚动查看页面的不同部分时，嵌套的标题链接和 URL 中的 Hash 值会实时更新（默认值：true）（性能优化）
-    activeHeaderLinks: true,
+    activeHeaderLinks: false,
     valineConfig: {
       appId: '1HbrYKc61YA2cpKyOIfSjxfr-gzGzoHsz',
       appKey: 'MB0cbJwSejdYlix1AjjLLFRv',
@@ -111,19 +112,16 @@ module.exports = {
      * 'twilight'
      */
   plugins: [
-    ['@vuepress/active-header-links', {
-      sidebarLinkSelector: '.sidebar-link',
-      headerAnchorSelector: '.header-anchor'
-    }],
+    ['@vuepress/nprogress'],
     ["sakura", {
       num: 20,  // 默认数量
       show: true, //  是否显示
       zIndex: -1,   // 层级
       img: {
         replace: false,  // false 默认图 true 换图 需要填写httpUrl地址
-        httpUrl: '...'     // 绝对路径
+        httpUrl: '...'   // 绝对路径
       }     
-  }],
+    }],
     [
       //鼠标点击特效 先安装在配置， npm install vuepress-plugin-cursor-effects --save
       "cursor-effects",
@@ -134,66 +132,13 @@ module.exports = {
       }
     ],
   
-  // 代码复制弹窗插件
-  //npm install -D vuepress-plugin-nuggets-style-copy
-    ["vuepress-plugin-nuggets-style-copy", {
-      copyText: "copy",
-      tip: {
-          content: "复制成功!"
-      }
-    }],
-    ['@vuepress/last-updated', 
-      {
-        transformer: (timestamp, lang) => {
-          return (new Date(timestamp)).toUTCString() 
-          //或者用下面这段
-          // const moment = require('moment')
-          // moment.locale(lang)
-          // return moment(timestamp).toLocaleString()
-        }
-      }],
+    ['@vuepress/last-updated'],
     ['@vuepress-reco/vuepress-plugin-pagation', {
       perPage: 10
     }],
-     // 音乐插件
-     ['meting', {
-      //metingApi: "https://meting.sigure.xyz/api/music",
-      meting: {
-          // 网易
-          server: "netease",
-          // 读取歌单
-          type: "playlist",
-          // 歌单id（只用修改这个）
-          mid: "7256568321",
-      },
-      // 不配置该项的话不会出现全局播放器
-      aplayer: {
-          // 吸底模式
-          fixed: true,
-          mini: true,
-          // 自动播放
-          autoplay: false,
-          // 歌曲栏折叠
-          listFolded: true,
-          // 颜色
-          theme: '#f9bcdd',
-          // 播放顺序为随机
-          order: 'random',
-          // 初始音量
-          volume: 0.1,
-          // 关闭歌词显示
-          lrcType: 0
-      },
-      mobile: {
-          // 手机端去掉cover图
-          cover: false,
-      }
-  }],
+    
     // 在代码区，添加一个拷贝按钮，用来拷贝代码
     //npm install vuepress-plugin-code-copy
-    ['vuepress-plugin-code-copy', true],
-    ['sitemap', {
-      hostname: 'https://conimi.com'
-    }],
+    ["vuepress-plugin-code-copy", true]
   ]
 }
