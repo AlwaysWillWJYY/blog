@@ -142,6 +142,22 @@ module.exports = {
     // 在代码区，添加一个拷贝按钮，用来拷贝代码
     //npm install vuepress-plugin-code-copy
     ["vuepress-plugin-code-copy", true],
-    ['reading-progress']
+    ['reading-progress'],
+    // 音乐插件
+    // [
+    //   'meting',
+    //   {
+    //     meting: {
+    //       server: 'netease',
+    //       type: 'playlist',
+    //       mid: '1896535414',
+    //     },
+    //     aplayer: {
+    //       lrcType: 3,
+    //       preload: 'metadata',
+    //     },
+    //     defaultCover: 'https://nyakku.moe/avatar.jpg',
+    //   },
+    // ],
   ]
 }

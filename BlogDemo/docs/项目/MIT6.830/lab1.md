@@ -1,16 +1,10 @@
 ---
 title: MIT数据库Lab1实验报告
+date: 2022-08-01
 publish: false
 ---
 
-::: tip
-这是一个实验的开始
-:::
-
-<!-- more -->
-
 [[toc]]
-
 
 ## 1、开始
 
