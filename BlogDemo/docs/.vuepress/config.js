@@ -17,17 +17,17 @@ module.exports = {
     ['meta', { name: 'keywords', content: 'AuraroJ,博客,conimi,nico'}],
     ["meta", {name: "apple-mobile-web-app-capable", content: "yes"}],
       // 引入jquery
-  ["script", {
-    "language": "javascript",
-    "type": "text/javascript",
-    "src": "https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"
-  }],
-  // 引入鼠标点击脚本
-  ["script", {
-    "language": "javascript",
-    "type": "text/javascript",
-    "src": "/js/MouseClickEffect.js"
-  }],
+    ["script", {
+      "language": "javascript",
+      "type": "text/javascript",
+      "src": "https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"
+    }],
+    // 引入鼠标点击脚本
+    ["script", {
+      "language": "javascript",
+      "type": "text/javascript",
+      "src": "/js/MouseClickEffect.js"
+    }],
   ],
   theme: "reco",
   markdown: {
@@ -147,17 +147,16 @@ module.exports = {
     // [
     //   'meting',
     //   {
-    //     meting: {
-    //       server: 'netease',
-    //       type: 'playlist',
-    //       mid: '1896535414',
-    //     },
-    //     aplayer: {
-    //       lrcType: 3,
-    //       preload: 'metadata',
-    //     },
-    //     defaultCover: 'https://nyakku.moe/avatar.jpg',
+    //      meting: {
+    //         server: 'netease', // 音乐源
+    //         type: 'playlist', // 资源类型
+    //         mid: '7511047240', // 资源 id
+    //      },
+    //      aplayer: {
+    //         lrcType: 3,
+    //      },
     //   },
     // ],
+    // https://music.163.com/playlist?id=7511047240&userid=372488170
   ]
 }
