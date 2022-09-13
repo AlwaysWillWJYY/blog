@@ -83,6 +83,7 @@
     <ModuleTransition delay="0.24">
       <Content v-show="recoShowModule" class="home-center" custom />
     </ModuleTransition>
+    <Meting server="netease" type="playlist" mid="2539599584" :lrc-type="3" />
   </div>
 </template>
 
