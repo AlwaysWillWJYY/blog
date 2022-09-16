@@ -378,11 +378,15 @@ function getXiangRoute() {
     return [
 
         {
-            title: 'MIT6.830',
+            title: 'MIT项目',
             children: [
                 {
                     title: 'MIT数据库',   // 必要的
                     children: ['MIT6.830/lab1','MIT6.830/lab2','MIT6.830/lab3','MIT6.830/lab4','MIT6.830/lab5','MIT6.830/lab6']
+                },
+                {
+                    title: 'MIT操作系统',   // 必要的
+                    children: ['MIT6.s081/lab1']
                 }
             ]
         },

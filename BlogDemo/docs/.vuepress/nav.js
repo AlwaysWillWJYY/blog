@@ -46,7 +46,8 @@ function getNav() {
             items: [
                 {
                     text: '底层项目', items: [
-                        {text: 'MIT6.830 JAVA', link: '/项目/'}
+                        {text: 'MIT6.830 JAVA', link: '/项目/'},
+                        {text: 'MIT6.s081 C', link: '/项目/'}
                     ]
                 },
                 {
