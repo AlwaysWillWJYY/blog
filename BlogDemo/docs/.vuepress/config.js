@@ -76,7 +76,8 @@ module.exports = {
       '/Os/': sidebar.getOsRoute(),
       '/项目/': sidebar.getXiangRoute(),
       '/LeetCode/': sidebar.getAlgorithmRoute(),
-      '/论文/': sidebar.getPaperRoute()
+      '/论文/': sidebar.getPaperRoute(),
+      '/面经/': sidebar.getViewRoute(),
     },
   
     

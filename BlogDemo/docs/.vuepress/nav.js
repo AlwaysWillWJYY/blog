@@ -12,6 +12,10 @@ function getNav() {
             link: "/随笔/me"
           },
           {
+            text: "面经",
+            link: "/面经/"
+          },
+          {
             text: "计算机网络",
             link: "/network/浏览器输入url过程"
           },

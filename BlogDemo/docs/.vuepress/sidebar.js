@@ -224,7 +224,32 @@ function getJavaRoute() {
         },
     ]
 }
-
+//面经侧边栏
+function getViewRoute(){
+    return [
+        //Group1
+        {
+           title: '概述',
+           children: [
+               {
+                   title: '综述',   // 必要的
+                   children: ['']
+               }
+           ]
+       },
+       //Group4
+       {
+         title: '后端Java',
+         children: [
+           {
+             title: '后端面经',  //组名
+             children: ['后端面经/快手实习面经'],   //该分组下要显示的文件的目录
+           },
+         ],
+       },
+       
+   ]
+}
 //Java 框架侧边栏
 function getJavaFrameRoute() {
     return [
@@ -392,7 +417,7 @@ function getAlgorithmRoute() {
                     title: '搜索',   // 必要的
                     children: ['提高课/搜索/城堡问题','提高课/搜索/池塘计数','提高课/搜索/单词接龙','提高课/搜索/红与黑dfs','提高课/搜索/马走日',
                     '提高课/搜索/迷宫','提高课/搜索/山峰和山谷','提高课/搜索/迷宫问题','提高课/搜索/小猫爬山','提高课/搜索/武士风度的牛','提高课/搜索/矩阵距离','提高课/搜索/数独',
-                    '提高课/搜索/木棒']
+                    '提高课/搜索/木棒','提高课/搜索/热浪']
                 },
                 {
                     title: '递归与递推',   // 必要的
@@ -489,7 +514,8 @@ module.exports = {
     getOsRoute,
     getXiangRoute,
     getAlgorithmRoute,
-    getPaperRoute
+    getPaperRoute,
+    getViewRoute
 
     // getToolRoute
 }
