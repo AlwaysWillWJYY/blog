@@ -387,6 +387,10 @@ function getXiangRoute() {
                 {
                     title: 'MIT操作系统',   // 必要的
                     children: ['MIT6.s081/lab1 Xv6 and Unix utilities']
+                },
+                {
+                    title: 'MIT分布式系统',   // 必要的
+                    children: ['MIT6.824/lab1']
                 }
             ]
         },

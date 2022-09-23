@@ -170,7 +170,6 @@ class Solution {
             fail = nums[i];
             st ^= 1 << i;
             bu[k] -= nums[i];
-            if(bu[k])
         }
         return false;
     }
