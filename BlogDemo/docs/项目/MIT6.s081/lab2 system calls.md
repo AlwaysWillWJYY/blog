@@ -213,7 +213,7 @@ struct sysinfo {
 
   * 将该函数放到kernel/defs.h中声明
 
-  * 实现sys_sysinfo,在 kernel/sysproc.c 
+  * 在 kernel/sysproc.c 中实现sys_sysinfo
 
   ```cpp
   #include "sysinfo.h"
