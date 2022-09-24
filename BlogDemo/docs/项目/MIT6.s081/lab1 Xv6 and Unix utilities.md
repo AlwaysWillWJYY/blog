@@ -1,4 +1,6 @@
 ---
+
+
 title: 操作系统lab1
 date: 2022-09-16
 publish: false
@@ -201,3 +203,145 @@ int main(int argc, char *argv[])
 
 ### 任务四、find
 
+* stat是文件信息的结构体 , 可以根据type区分是目录还是具体文件（linux中目录也是文件） 
+* fstat(fd, &st)可以将fd文件描述符（int类型）指向的文件的stat结构体信息赋值到st中。 
+* stat(path, &st) ,其中path为char*,表示某文件的路径，st为stat结构体.将该文件的stat结构体信息赋值到st中。
+* fmtname（./a.txt)将path后面的文件名a.txt输出
+* memmove(p, de.name, DIRSIZ), 将de.name所指向地址的前DIRSIZ个字节拷贝到p所指向的地址中。
+
+```c
+#include "kernel/types.h"
+#include "kernel/fcntl.h"
+#include "kernel/stat.h"
+#include "kernel/fs.h"
+#include "user/user.h"
+
+/*
+	将路径格式化为文件名
+*/
+char* fmt_name(char *path){
+  static char buf[DIRSIZ+1];
+  char *p;
+
+  // Find first character after last slash.
+  for(p=path+strlen(path); p >= path && *p != '/'; p--);
+  p++;
+  memmove(buf, p, strlen(p)+1);
+  return buf;
+}
+/*
+	系统文件名与要查找的文件名，若一致，打印系统文件完整路径
+*/
+void eq_print(char *fileName, char *findName){
+	if(strcmp(fmt_name(fileName), findName) == 0){
+		printf("%s\n", fileName);
+	}
+}
+/*
+	在某路径中查找某文件
+*/
+void find(char *path, char *findName){
+	int fd;
+	struct stat st;	
+	if((fd = open(path, O_RDONLY)) < 0){
+		fprintf(2, "find: cannot open %s\n", path);
+		return;
+	}
+	if(fstat(fd, &st) < 0){
+		fprintf(2, "find: cannot stat %s\n", path);
+		close(fd);
+		return;
+	}
+    //buf是用来记录文件前缀的，这样才会打印出之前的目录
+	char buf[512], *p;	
+	struct dirent de;
+	switch(st.type){	
+		case T_FILE:
+			eq_print(path, findName);			
+			break;
+		case T_DIR:
+			if(strlen(path) + 1 + DIRSIZ + 1 > sizeof buf){
+				printf("find: path too long\n");
+				break;
+			}
+			strcpy(buf, path);
+			p = buf+strlen(buf);
+            //在末尾添加/ 比如 path为 a/b/c 经过这步后变为 a/b/c/<-p
+			*p++ = '/';
+            // 如果是文件夹，则循环读这个文件夹里面的文件
+			while(read(fd, &de, sizeof(de)) == sizeof(de)){
+				if(de.inum == 0 || de.inum == 1 || strcmp(de.name, ".")==0 || strcmp(de.name, "..")==0)
+					continue;	
+                //拼接出形如 a/b/c/de.name 的新路径(buf)
+				memmove(p, de.name, strlen(de.name));
+				p[strlen(de.name)] = 0;
+                //递归进行查找
+				find(buf, findName);
+			}
+			break;
+	}
+	close(fd);	
+}
+
+int main(int argc, char *argv[]){
+	if(argc < 3){
+		printf("find: find <path> <fileName>\n");
+		exit(0);
+	}
+	find(argv[1], argv[2]);
+	exit(0);
+}
+```
+
+### 任务五、xargs实验
+
+实现类似unix xargs类似功能，比如echo hello too|xargs echo bye，要输出bye hello too；
+即等价于echo bye hello too，将上个命令输出的每行作为参数，拼接到xargs后面的指令后面。
+echo hello too输出为hello too，将其拼接到echo bye后面，就是echo bye hello too。
+
+```c
+#include "kernel/types.h"
+#include "user/user.h"
+
+int main(int argc, char* argv[]) {
+  if (argc < 2) {
+    printf("xargs <command>\n");
+    exit(1);
+  }
+
+  // 添加命令运行参数的二维数组
+  char* commandArgv[32];
+  int commandSize = argc - 1;
+  // 将原本argv中的参数拷贝到新的参数数组中
+  for (int i = 0; i < commandSize; ++i) {
+    commandArgv[i] = argv[i + 1];
+  }
+
+  char inputBuffer[512]; // 输入缓冲
+  char inputChar; // 输入字符
+  int inputNum = 0; // 输入字符计数
+  while (read(0, &inputChar, sizeof(char)) > 0) {
+    if (inputChar == '\n') { // 遇到回车时执行
+      // 将当前指令添加到运行参数的二维数组中
+      inputBuffer[inputNum] = 0; // 在字符数组最后添加'\0'
+      commandArgv[commandSize++] = inputBuffer; // 将标准输入获取的参数拼接到参数数组中 
+      commandArgv[commandSize] = 0; // 添加参数数组的结尾
+      if (fork() == 0) {
+        exec(argv[1], commandArgv); // 子进程中执行目标命令
+      }
+      wait(0); // 等待子进程命令执行结束
+      commandSize = argc - 1; // 初始化，保留argv中参数，准备执行下一行
+      inputNum = 0;
+    } else if (inputChar == ' ') {
+      inputBuffer[inputNum++] = 0; // 遇到空格添加分割符
+    } else {
+      inputBuffer[inputNum++] = inputChar; // 正常字符输入
+    }
+  }
+  exit(0);
+}
+```
+
+
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/31d8ecb31acd494ea32eb94f596eb106.png)
