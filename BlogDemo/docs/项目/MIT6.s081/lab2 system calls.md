@@ -173,7 +173,7 @@ struct sysinfo {
 
 * ####  添加系统调用表
 
-  *  在`kernel/syscall.c`中，添加`[SYS_trace] sys_trace,`
+  *  在`kernel/syscall.c`中，添加`[SYS_sysinfo]   sys_sysinfo,`
 
 * #### 实现sysinfo的功能
 
@@ -196,15 +196,60 @@ struct sysinfo {
   ```
 
   * 将该函数放到kernel/defs.h中声明
+  * 获取运行中的线程数,在kernel/proc.c中，添加cnt_proc函数
 
-* 
+   只需要遍历所有的进程，获取其状态信息，判断是不是`UNUSED`并统计数目 
 
-* 
+  ```cpp
+  // 计算进程数
+  uint64 cnt_proc(void){
+    uint64 cnt = 0;
+    for(struct proc *p = proc; p < &proc[NPROC]; p++){
+      if(p->state != UNUSED) cnt++;
+    }
+    return cnt;
+  }
+  ```
 
-* 
+  * 将该函数放到kernel/defs.h中声明
 
-* 
+  * 实现sys_sysinfo,在 kernel/sysproc.c 
 
-* 
-
+  ```cpp
+  #include "sysinfo.h"
   
+  uint64 sys_sysinfo(void){
+    // 从用户态读入1个指针，作为存放sysinfo的buffer
+    uint64 addr;
+    if(argaddr(0, &addr) < 0)
+      return -1;
+  
+    // 定义1个sysinfo结构的变量sinfo， 记录系统调用的信息
+    struct sysinfo sinfo;
+    sinfo.freemem = cnt_free_mem(); // 计算空闲的字节数
+    sinfo.nproc = cnt_proc(); // 计算并行的线程数
+  
+    // 复制 sinfo 的内容到用户态传来的地址
+    // 使用copyout 结合当前进程的页表，获得进程传进来的指针（逻辑地址）对应的物理地址
+    // 将sinfo中的数据 复制到 该指针所指向的位置，共用户进程使用
+    if(copyout(myproc()->pagetable, addr, (char*)&sinfo, sizeof(sinfo)) < 0)
+      return -1;
+    return 0;
+  }
+  ```
+
+  ```cpp
+  copyout(pagetable_t pagetable, uint64 dstva, char *src, uint64 len)
+  ```
+
+  copyout它其实就是把在内核地址src开始的len大小的数据拷贝到用户进程pagetable的虚地址dstva处，所以sysinfo实现里先用argaddr读进来我们要保存的在用户态的数据sysinfo的指针地址，然后再把从内核里得到的sysinfo开始的内容以sizeof(sysinfo)大小的的数据复制到这个指针上，其实就是同一个数据结构，所以这样直接复制过去就可以了。 
+
+  *  新写一个user/sysinfo.c的用户程序 
+
+  * 添加Makefile,` $U/_sysinfotest `,` $U/_sysinfo `
+
+* 运行结果
+
+  ![在这里插入图片描述](https://img-blog.csdnimg.cn/196315e0bcf148c9a80c554dc5afbe21.png)
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/f6408a1c59a241ef9cc4ca9627b89afa.png)
