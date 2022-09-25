@@ -386,7 +386,7 @@ function getXiangRoute() {
                 },
                 {
                     title: 'MIT操作系统',   // 必要的
-                    children: ['MIT6.s081/lab1 Xv6 and Unix utilities','MIT6.s081/lab2 system calls']
+                    children: ['MIT6.s081/lab1 Xv6 and Unix utilities','MIT6.s081/lab2 system calls','MIT6.s081/lab3 Page tables']
                 },
                 {
                     title: 'MIT分布式系统',   // 必要的
@@ -478,11 +478,11 @@ function getAlgorithmRoute() {
                 },
                 {
                     title: '周赛',   // 必要的
-                    children: ['周赛/309场周赛','周赛/310场周赛','周赛/311场周赛']
+                    children: ['周赛/309场周赛','周赛/310场周赛','周赛/311场周赛','周赛/312场周赛']
                 },
                 {
                     title: 'AcWing周赛',   // 必要的
-                    children: ['周赛/AcWing68场周赛']
+                    children: ['周赛/AcWing68场周赛','周赛/AcWing70场周赛']
                 }
             ]
         },
