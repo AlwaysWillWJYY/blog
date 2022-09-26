@@ -386,7 +386,8 @@ function getXiangRoute() {
                 },
                 {
                     title: 'MIT操作系统',   // 必要的
-                    children: ['MIT6.s081/lab1 Xv6 and Unix utilities','MIT6.s081/lab2 system calls','MIT6.s081/lab3 Page tables']
+                    children: ['MIT6.s081/lab1 Xv6 and Unix utilities','MIT6.s081/lab2 system calls','MIT6.s081/lab3 Page tables',
+                'MIT6.s081/lab4 Trap']
                 },
                 {
                     title: 'MIT分布式系统',   // 必要的
