@@ -1,5 +1,5 @@
 ---
-title: 操作系统lab7
+title: 操作系统lab7 Multithreading
 date: 2022-09-27
 publish: false
 ---

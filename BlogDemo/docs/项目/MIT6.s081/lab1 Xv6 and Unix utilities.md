@@ -1,7 +1,5 @@
 ---
-
-
-title: 操作系统lab1
+title: 操作系统lab1 Xv6 and Unix utilities
 date: 2022-09-16
 publish: false
 ---

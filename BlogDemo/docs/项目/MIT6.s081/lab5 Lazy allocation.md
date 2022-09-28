@@ -1,5 +1,5 @@
 ---
-title: 操作系统lab5
+title: 操作系统lab5 Lazy allocation
 date: 2022-09-27
 publish: false
 ---

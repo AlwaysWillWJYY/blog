@@ -1,5 +1,5 @@
 ---
-title: 操作系统lab6
+title: 操作系统lab6 Copy-on-write fork
 date: 2022-09-27
 publish: false
 ---

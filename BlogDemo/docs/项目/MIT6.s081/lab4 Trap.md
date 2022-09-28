@@ -1,5 +1,5 @@
 ---
-title: 操作系统lab4
+title: 操作系统lab4 Trap
 date: 2022-09-27
 publish: false
 ---

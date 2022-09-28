@@ -1,5 +1,5 @@
 ---
-title: 操作系统lab2
+title: 操作系统lab2 system calls
 date: 2022-09-24
 publish: false
 ---
