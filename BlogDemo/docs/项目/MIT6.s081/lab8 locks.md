@@ -204,7 +204,7 @@ publish: false
 
 * 将原本管理缓存块的双向链表移除, 采用哈希表来管理, 这样**每个 bucket 有一个锁**而非只有一个 bcache 的全局锁, 这样便可以减少锁的争用.
 * 此处仍然**使用了一个 `bcache` 的全局锁, 用于初始分配缓存块到哈希表**.此外, 对于**整个哈希表, 也有一个全局锁**, 因为当缓存块全部分配后, 是通过时间戳来寻找 bucket 中引用计数为 0 的缓存块, 对其进行重用, 此时可能会将其移至新的 bucket, 所以需要对哈希表整体加锁, 保证只有一个线程能够对哈希表整体操作, 保证其全局一致性.
-  这里 bcache 的全局锁和哈希表的全局锁是两个锁, 且不能使用一个代替. 具体见下文说明.
+  这里 bcache 的全局锁和哈希表的全局锁是两个锁, 且不能使用一个代替. 具体见说明.
 * 此处的实现考虑了 bcachetest 中不会发生的并发场景: 包括两个线程并发使用同一块, 两个线程并发寻找未使用块的情况.
 
 ### 步骤
@@ -327,4 +327,146 @@ publish: false
     }
     ```
 
-  * 
+  * 修改 `kernel/bio.c` 中的 `bpin()` 和 `bunpin()` 函数.
+    这两个函数的修改比较简单, 就是将原本的全局锁替换为缓存块对应的 bucket 的锁即可.
+  
+  ```cpp
+  void
+  bpin(struct buf *b) {
+    int idx = HASH(b->blockno);
+    acquire(&bcache.locks[idx]);
+    b->refcnt++;
+    release(&bcache.locks[idx]);
+  }
+  
+  void
+  bunpin(struct buf *b) {
+    int idx = HASH(b->blockno);
+    acquire(&bcache.locks[idx]);
+    b->refcnt--;
+    release(&bcache.locks[idx]);
+  }
+  ```
+  
+* 修改 `bget()` 函数
+
+  1. 首先是根据 `blockno` 在哈希表相应 bucket 的链表中寻找对应的缓存块, 如果找到则直接返回. 这里找到的条件以及相应的操作和原实现在双向链表中查找是一致的.
+
+  2. 若未在哈希表 bucket 中找到, 则先考虑进行缓存块的分配. 和原实现中所有缓存块初始化插入双向链表中不同, 此处哈希表最初是空的, 根据 bcache.size 字段可以得知当前已经分配的缓存块, 只要还有缓存块未分配, 则进行分配, 进行缓存块的初始化操作后, 再将缓存块插入到对应的哈希表 bucket 中
+
+  3. 最后若缓存块已经全部分配出去了, 则根据时间戳找寻缓存块进行重用.  对哈希表的每个 bucket 进行依次的寻找, 先从目标的 bucket (即 `idx=HASH(blockno)`)开始, **遍历整个 bucket 的链表, 找到引用计数为 0 且时间戳最小的缓存块进行重用**.
+
+  4.  对整个过程中加锁的考虑 (hard)
+
+     在步骤 1 中, 很显然由于需要遍历哈希表的 bucket, 只需要对这个 bucket 加锁 locks[idx].
+     而在步骤 2 中, 由于会对 size 字段进行读取和更新, 因此需要在其前后加锁 lock. 这里有一个问题就是此时是否需要释放 locks[idx] 锁, 答案是否定的, 因为一旦释放, 则可能有另一个线程对同一缓存块进行访问, 而此时第一个线程可能还正在分配, 缓存块还未更新到 bucket 链表中, 由于 bucket 的锁已经释放, 这样第二个线程可以遍历该 bucket 链表, 同样发现缓存块不存在则去申请分配. 从而导致同一块会被多次分配, 这样是不允许的, 因此需要在申请分配时一直持有 locks[idx] 锁, 这样其他线程在申请缓存块的过程中是无法访问目标 bucket 的, 便避免了上述问题. 当然, 在 size 字段更新后就可以释放 lock 锁了, 这是没有问题的, 这样其他 bucket 可以再去申请新的缓存块.
+     而在步骤 3 寻找可重用缓存块时加锁就更为复杂. 容易分析得到的是, 这个过程可能会遍历多个 bucket, 因此每次循环需要对当前 bucket 进行加锁和解锁. 而这里有一个问题, 一旦释放了当前目标 bucket(idx=HASH(blockno))的锁, 则就可以有另一个线程同样去访问该缓存块, 致使同样走到步骤 3 尝试找可重用块, 显然这样可能导致可重用块覆盖的问题, 因此此时需要哈希表全局锁 hashlock 在步骤 3 前进行加锁, 以保证只能有 1 个线程能够寻找可重用块. 此时需要注意的是, 由于步骤 3 开始前一直持有锁 locks[idx], 需要先进行释放, 而释放后如前文所述可能会有另一个线程走到步骤 3, 此时由于获取不到 hashlock 会被阻塞, 但当第一个线程找到重用块后, 该线程会获取到 hashlock, 但此时不应该继续找重用块, 而是要同步骤 1 一样遍历链表判读是否此时已经有了目标缓存块了.
+     最后说明一下为什么 hashlock 和 lock 需要是两个不同的锁. 首先 lock 锁用于保证 size 字段的线程安全, 而且在步骤 2 时, 会在获取 locks[idx] 锁后尝试获取 lock. 而在步骤 3 之前需要先释放 locks[idx] 锁, 而在持有哈希表的全局锁 hashlock 后再重新尝试获取 locks[idx]. 很显然, 若一个线程在步骤 3 持有 hashlock 尝试获取 locks[idx], 另一个线程在步骤 2 持有 locks[idx] 尝试获取 lock, 若二者是同一个锁就会造成死锁. 因此, 需要两个锁.
+
+```cpp
+static struct buf*
+bget(uint dev, uint blockno)
+{
+  struct buf *b;
+  // lab8-2
+  int idx = HASH(blockno);
+  struct buf *pre, *minb = 0, *minpre;
+  uint mintimestamp;
+  int i;
+  
+  // loop up the buf in the buckets[idx]
+  acquire(&bcache.locks[idx]);  // lab8-2
+  for(b = bcache.buckets[idx].next; b; b = b->next){
+    if(b->dev == dev && b->blockno == blockno){
+      b->refcnt++;
+      release(&bcache.locks[idx]);  // lab8-2
+      acquiresleep(&b->lock);
+      return b;
+    }
+  }
+
+  // Not cached.
+  // check if there is a buf not used -lab8-2
+  acquire(&bcache.lock);
+  if(bcache.size < NBUF) {
+    b = &bcache.buf[bcache.size++];
+    release(&bcache.lock);
+    b->dev = dev;
+    b->blockno = blockno;
+    b->valid = 0;
+    b->refcnt = 1;
+    b->next = bcache.buckets[idx].next;
+    bcache.buckets[idx].next = b;
+    release(&bcache.locks[idx]);
+    acquiresleep(&b->lock);
+    return b;
+  }
+  release(&bcache.lock);
+  release(&bcache.locks[idx]);
+
+  // select the last-recently used block int the bucket
+  //based on the timestamp - lab8-2
+  acquire(&bcache.hashlock);
+  for(i = 0; i < NBUCKET; ++i) {
+      mintimestamp = -1;
+      acquire(&bcache.locks[idx]);
+      for(pre = &bcache.buckets[idx], b = pre->next; b; pre = b, b = b->next) {
+          // research the block
+          if(idx == HASH(blockno) && b->dev == dev && b->blockno == blockno){
+              b->refcnt++;
+              release(&bcache.locks[idx]);
+              release(&bcache.hashlock);
+              acquiresleep(&b->lock);
+              return b;
+          }
+          if(b->refcnt == 0 && b->timestamp < mintimestamp) {
+              minb = b;
+              minpre = pre;
+              mintimestamp = b->timestamp;
+          }
+      }
+      // find an unused block
+      if(minb) {
+          minb->dev = dev;
+          minb->blockno = blockno;
+          minb->valid = 0;
+          minb->refcnt = 1;
+          // if block in another bucket, we should move it to correct bucket
+          if(idx != HASH(blockno)) {
+              minpre->next = minb->next;    // remove block
+              release(&bcache.locks[idx]);
+              idx = HASH(blockno);  // the correct bucket index
+              acquire(&bcache.locks[idx]);
+              minb->next = bcache.buckets[idx].next;    // move block to correct bucket
+              bcache.buckets[idx].next = minb;
+          }
+          release(&bcache.locks[idx]);
+          release(&bcache.hashlock);
+          acquiresleep(&minb->lock);
+          return minb;
+      }
+      release(&bcache.locks[idx]);
+      if(++idx == NBUCKET) {
+          idx = 0;
+      }
+  }
+// lab8-2
+//  // Recycle the least recently used (LRU) unused buffer.
+//  for(b = bcache.head.prev; b != &bcache.head; b = b->prev){
+//    if(b->refcnt == 0) {
+//      b->dev = dev;
+//      b->blockno = blockno;
+//      b->valid = 0;
+//      b->refcnt = 1;
+//      release(&bcache.lock);
+//      acquiresleep(&b->lock);
+//      return b;
+//    }
+//  }
+  panic("bget: no buffers");
+}
+```
+
+### 结果
+
+* 
