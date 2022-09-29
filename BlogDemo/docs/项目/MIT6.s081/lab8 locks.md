@@ -209,3 +209,122 @@ publish: false
 
 ### 步骤
 
+* 修改 `buf` 和 `bcache` 结构体
+
+  *  修改 `kernel/buf.h` 中的 `buf` 结构体. 
+
+    由于此处不再使用双向链表而采用哈希表, 对于哈希表 bucket 中的链式结构, 此处笔者使用的是单向链表(当然双向链表同样可以满足), 所以不再需要 prev 字段.
+    此外, 由于对于寻找未使用的缓存块的 LRU 算法改成了基于时间戳比较的算法, 因此添加了 timestamp 字段用于记录最后使用缓存块的时间.
+
+    ```cpp
+    struct buf {
+      int valid;   // has data been read from disk?
+      int disk;    // does disk "own" buf?
+      uint dev;
+      uint blockno;
+      struct sleeplock lock;
+      uint refcnt;
+    //  struct buf *prev; // LRU cache list 
+      struct buf *next;     // hash list
+      uchar data[BSIZE];
+      uint timestamp;   // the buf last using time
+    };
+    ```
+
+  * 修改 kernel/bio.c 中的 bcache 结构体.
+    根据上文思路, 此处添加了 size 字段, 用于记录已经分配到哈希表的缓存块 struct buf 的数量; 添加了 buckets[NBUCKET] 数组, 作为哈希表的 bucket 数组, 其中 NBUCKET 为 bucket 的数目, 根据指导书此处设置为 13; 添加 locks[NBUCKET] 字段, 用于作为每个 bucket 对应的锁; 添加了 hashlock 字段, 作为哈希表的全局锁, 用于对哈希表整体加锁.
+
+    ```cpp
+    // lab8-2
+    #define NBUCKET 13      // the count of hash table's buckets
+    #define HASH(blockno) (blockno % NBUCKET)
+    
+    struct {
+      struct spinlock lock;   // used for the buf alloc and size
+      struct buf buf[NBUF];
+      int size;     // record the count of used buf - lab8-2
+      struct buf buckets[NBUCKET];  // lab8-2
+      struct spinlock locks[NBUCKET];   // buckets' locks - lab8-2
+      struct spinlock hashlock;     // the hash table's lock - lab8-2
+      // Linked list of all buffers, through prev/next.
+      // Sorted by how recently the buffer was used.
+      // head.next is most recent, head.prev is least.
+    //  struct buf head;    // lab8-2
+    } bcache;
+    ```
+
+* 修改非主要函数
+
+  * 修改 kernel/bio.c 中的 binit() 函数.
+    该函数主要用于缓存块和相关锁的初始化.
+    由于不再使用双向链表, 因此相关的代码即可注释掉.
+    此外需要将新增的 size 字段, 以及哈希表的 bucket 数组的锁 locks[NBUCKET] 以及哈希表全局锁 hashlock 进行初始化.
+
+    ```cpp
+    void
+    binit(void)
+    {
+      int i;
+      struct buf *b;
+    
+      bcache.size = 0;  // lab8-2
+      initlock(&bcache.lock, "bcache");
+      initlock(&bcache.hashlock, "bcache_hash");    // init hash lock - lab8-2
+      // init all buckets' locks  - lab8-2
+      for(i = 0; i < NBUCKET; ++i) {
+        initlock(&bcache.locks[i], "bcache_bucket");
+      }
+    
+    // lab8-2
+    //  // Create linked list of buffers
+    //  bcache.head.prev = &bcache.head;
+    //  bcache.head.next = &bcache.head;
+      for(b = bcache.buf; b < bcache.buf+NBUF; b++){
+    // lab8-2
+    //    b->next = bcache.head.next;
+    //    b->prev = &bcache.head;
+        initsleeplock(&b->lock, "buffer");
+    //    bcache.head.next->prev = b;
+    //    bcache.head.next = b;
+      }
+    }
+    ```
+
+  * 修改 kernel/bio.c 中的 brelse() 函数.
+    该函数用于释放缓存块. 在原本的实现中, 若其引用计数为 0, 则将其移至双向链表表头, 这样双向链表表头是最近使用的, 表尾是最近未使用的, 构成一个 LRU 序列, 方便 bget() 函数寻找缓存块.
+    而此处要使用基于时间戳的 LRU 实现, 因此不再使用双向链表, 只需要将当前的时间戳记录的缓存块的 timestamp 字段.
+    此外, 由于是通过哈希表管理, 加锁也由原本的全局锁改为缓存块所在的 bucket 的锁.
+
+    ```cpp
+    extern uint ticks;  
+    
+    void
+    brelse(struct buf *b)
+    {
+      int idx;
+      if(!holdingsleep(&b->lock))
+        panic("brelse");
+    
+      releasesleep(&b->lock);
+    
+      // change the lock - lab8-2
+      idx = HASH(b->blockno);
+      acquire(&bcache.locks[idx]);
+      b->refcnt--;
+      if (b->refcnt == 0) {
+        // no one is waiting for it.
+    // lab8-2
+    //    b->next->prev = b->prev;
+    //    b->prev->next = b->next;
+    //    b->next = bcache.head.next;
+    //    b->prev = &bcache.head;
+    //    bcache.head.next->prev = b;
+    //    bcache.head.next = b;
+        b->timestamp = ticks;
+      }
+      
+      release(&bcache.locks[idx]);
+    }
+    ```
+
+  * 
