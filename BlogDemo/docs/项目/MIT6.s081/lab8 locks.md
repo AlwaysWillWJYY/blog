@@ -469,4 +469,15 @@ bget(uint dev, uint blockno)
 
 ### 结果
 
-* 
+*  在 xv6 中运行 bcachetest, 输出如下, 可以看到 bcache 相关锁的争用情况大幅下降, acquire() 整体次数大幅减少, 最多被调用了 8500 次左右, 比修改前次数减少了一半多, 且自旋尝试获取锁的次数均为 0 次. 同时 bcache 中的锁也不再是最具争用性的 5 个锁. 测试 test0 和 test1 也均通过.
+
+  ![在这里插入图片描述](https://img-blog.csdnimg.cn/1fd2cd034a564fe2b3ea54780d710d48.png)
+
+  ![在这里插入图片描述](https://img-blog.csdnimg.cn/481836c80caa4da68ea80248fbddad69.png)
+
+*  在 xv6 中执行 `usertests` 测试 和 执行make grade测试
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/de869fee88bf43538c42ff82ce6ead85.png)
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/c4ef26caff374e4b8b5a898da07142fc.png)
+
