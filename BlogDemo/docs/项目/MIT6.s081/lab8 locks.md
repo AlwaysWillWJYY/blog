@@ -1,5 +1,5 @@
 ---
-title: 操作系统locks
+title: 操作系统lab8 locks
 date: 2022-09-28
 publish: false
 ---
