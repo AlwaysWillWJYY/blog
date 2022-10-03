@@ -25,7 +25,6 @@ class Main{
                 }
             }
         }
-        
     }
     public static boolean is_prime(int n){
         if(n < 2) return false;
@@ -62,7 +61,6 @@ class Main{
             }
         }
         System.out.println("YES");
-        
     }
 }
 ```

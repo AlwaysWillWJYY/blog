@@ -477,7 +477,7 @@ function getAlgorithmRoute() {
             children: [
                 {
                     title: '双周赛',   // 必要的
-                    children: ['周赛/86场双周赛','周赛/87场双周赛']
+                    children: ['周赛/86场双周赛','周赛/87场双周赛','周赛/88场双周赛']
                 },
                 {
                     title: '周赛',   // 必要的
