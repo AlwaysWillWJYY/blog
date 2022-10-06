@@ -214,3 +214,234 @@ publish: false
 
 * 编写 `munmap` 系统调用
 
+  在 kernel/sysfile.c 中实现系统调用 sys_munmap(). 根据实验要求, 该系统调用即将映射的部分内存进行取消映射, 同时若为 MAP_SHARED 则需要将对文件映射内存的修改会写到文件中(在 Linux 中, 会写文件是有 mmap 自动完成的, 与本实验不同).
+
+  * 首先也是对参数的提取, munmap 只有 addr 和 length 两个参数.
+
+  * 然后对参数进行简单的检查. len 需要非负; 此外根据 Linux 手册, addr 需要是PGSIZE 的整数倍.
+
+  * 接下来同 usertrap() 中类似, 根据 addr 和 length 找到对于的 VMA 结构体. 未找到则返回失败.
+
+  * 然后主要就是判断当前取消映射的部分是否有 MAP_SHARED 标志位, 有的话则需要将该部分写回文件. 当然在此之前先判断 len 是否为 0, 若是的话则直接返回成功, 无需后续的工作.
+    该部分为该系统调用的最为复杂的部分, 需要考虑的有两点: 一是哪些页面需要写入, 另一方面是每次写回文件的写入大小. 对于前者, 根据实验指导, 选择使用脏页标志位(PTE_D)进行记录, 拥有该标志位则表明改部分被修改过, 则需要将该页面写回文件中, 具体脏页标志位的设置见后续. 对于后者, 由于是根据脏页会写文件的, 因此能够想到写入大小为 PGSIZE, 但由于 len 可能不为 PGSIZE 的整倍数, 此处还需要进行判断. 此外, 根据实验指导, 参考 filewrite() 函数, 一次写入文件的大小还受日志 block 的影响, 因此可能会再分批次写入文件(实际上 PGSIZE 大于 maxsz, 整页需要写会文件时会被分为两次).
+
+  * 在将修改内容写回文件后, 便可以使用 uvmunmap() 将改部分页面在用户页表中取消映射.
+    这里采用的是向上页面取整的取消页表映射方法, 实际上感觉有些不合理, 因为可能有一部分页面仍未取消文件映射, 但考虑到 addr 需要页面对齐, 因此不会在页面中间取消文件映射, 否则后半部分将无法取消文件映射.
+    此外, 此处修改了 uvmunmap() 函数的 PTE_V 标志位的检查部分, 和之前 Lazy allocation 的实验相同, 取消映射的页面可能并未实际分配, 此时跳过即可.
+
+  * 最后还要更新一下 VMA 结构体. 因为取消文件映射的部分可能只是 VMA 结构体中文件映射内存的一部分, 但根据实验指导, 取消映射的部分不会在文件映射内存的中间, 即不会由于取消文件映射产生新的一块内存, 因此只需要更新原本 VMA 结构体的相关参数即可. 在整个 VMA 结构体中记录的内存都取消映射时, 则将该 VMA 结构体清空.
+
+    ```cpp
+    // lab10
+    uint64 sys_munmap(void) {
+      uint64 addr, va;
+      int len;
+      struct proc *p = myproc();
+      struct vm_area *vma = 0;
+      uint maxsz, n, n1;
+      int i;
+    
+      if (argaddr(0, &addr) < 0 || argint(1, &len) < 0) {
+        return -1;
+      }
+      if (addr % PGSIZE || len < 0) {
+        return -1;
+      }
+    
+      // find the VMA
+      for (i = 0; i < NVMA; ++i) {
+        if (p->vma[i].addr && addr >= p->vma[i].addr
+            && addr + len <= p->vma[i].addr + p->vma[i].len) {
+          vma = &p->vma[i];
+          break;
+        }
+      }
+      if (!vma) {
+        return -1;
+      }
+    
+      if (len == 0) {
+        return 0;
+      }
+    
+      if ((vma->flags & MAP_SHARED)) {
+        // the max size once can write to the disk
+        maxsz = ((MAXOPBLOCKS - 1 - 1 - 2) / 2) * BSIZE;
+        for (va = addr; va < addr + len; va += PGSIZE) {
+          if (uvmgetdirty(p->pagetable, va) == 0) {
+            continue;
+          }
+          // only write the dirty page back to the mapped file
+          n = min(PGSIZE, addr + len - va);
+          for (i = 0; i < n; i += n1) {
+            n1 = min(maxsz, n - i);
+            begin_op();
+            ilock(vma->f->ip);
+            if (writei(vma->f->ip, 1, va + i, va - vma->addr + vma->offset + i, n1) != n1) {
+              iunlock(vma->f->ip);
+              end_op();
+              return -1;
+            }
+            iunlock(vma->f->ip);
+            end_op();
+          }
+        }
+      }
+      uvmunmap(p->pagetable, addr, (len - 1) / PGSIZE + 1, 1);
+      // update the vma
+      if (addr == vma->addr && len == vma->len) {
+        vma->addr = 0;
+        vma->len = 0;
+        vma->offset = 0;
+        vma->flags = 0;
+        vma->prot = 0;
+        fileclose(vma->f);
+        vma->f = 0;
+      } else if (addr == vma->addr) {
+        vma->addr += len;
+        vma->offset += len;
+        vma->len -= len;
+      } else if (addr + len == vma->addr + vma->len) {
+        vma->len -= len;
+      } else {
+        panic("unexpected munmap");
+      }
+      return 0;
+    }
+    ```
+
+* 脏页标志位设置
+
+  * 首先是在 `kernel/riscv.h` 中定义了脏页标志位 `PTE_D`,`#define PTE_D (1L << 7) `
+
+  * 接下来在 kernel/vm.c 中定义了 uvmgetdirty() 以及 uvmsetdirtywrite() 两个函数. 前者用于读取脏页标志位, 后者用于写入脏页标志位和写标志位(因为两个标志位是同时更新的). 因为返回 PTE 的 walk() 是内部函数, 所有此处选择了定义这两个函数专门用于脏页标志位的相关读写.
+
+    ```cpp
+    // get the dirty flag of the va's PTE
+    int uvmgetdirty(pagetable_t pagetable, uint64 va) {
+      pte_t *pte = walk(pagetable, va, 0);
+      if(pte == 0) {
+        return 0;
+      }
+      return (*pte & PTE_D);
+    }
+    
+    // set the dirty flag and write flag of the va's PTE
+    int uvmsetdirtywrite(pagetable_t pagetable, uint64 va) {
+      pte_t *pte = walk(pagetable, va, 0);
+      if(pte == 0) {
+        return -1;
+      }
+      *pte |= PTE_D | PTE_W;
+      return 0;
+    }
+    ```
+
+  * 接下来就是关于如何设置脏页标志位. 思路也比较简单, 和 COW 机制有些类似, 即利用 page fault 进行脏页标志位的设置. 对于脏页, 即有修改的页面, 其页面权限一定是可写的, 因此考虑在第一次写页面时通过 trap 处理对页面的 PTE 增加脏页标志位. 主要有两种情景:
+    一种是对未映射的可写页面进行写操作, 根据前文内容, 此时会通过 trap 进行物理页的分配, 即 Lazy allocation. 而由于触发本次 page fault 的是写操作, 因此后续指令一定会对该页面的内容进行修改, 因此即可添加 PTE_D 脏页标志位.
+    另一种则是对未映射的可写页面进行读操作或执行操作, 此时同样会进行物理页的分配, 但虽然该页面可写, 但是此时是读操作, 并未修改页面的内容, 因此此时不能添加 PTE_D 标志位, 需要后续写操作时再进行添加. 于是在此时, 并不设置 PTE 的写标志位 PTE_W, 这样页面当前是不可写的, 若后续对页面写操作便会再次触发 page fault, 此时再添加写标志位和脏页标志位.
+    具体的代码在上述步骤的 kernel/trap.c 的 usertrap() 中. 上文提到的读写执行操作, 可以通过 r_scause() 的返回值进行区分; 而在上述步骤中找到对应 VMA 结构体后的代码 if (r_scause() == 15 && (vma->prot & PROT_WRITE) && walkaddr(p->pagetable, va)) 即用于区分上述两种情况, r_scause() 为 15 即 Store Page fault, 写操作, 此时 VMA 中记录的映射内存需要同样可写, 且 walkaddr() 返回非 0 值表明已经对该页面分配了内存. 这便是用于上述的第二种情况再次触发 page fault 时进行判断. else 子句中则是步骤中描述的页面分配过程, 而其中通过代码 if (r_scause() == 15 && (vma->prot & PROT_WRITE)) 进行脏页标志位和写标志位的设置, 对应上述的第一种情况.
+
+  * 在 usertrap() 中完成了脏页标志位的设置, 在后续 munmap() 便可以通过调用 uvmgetdirty() 来确定页面是否被修改.
+
+*  修改 `exit` 和 `fork` 系统调用
+
+  上述内容完成了基本的 `mmap` 和 `munmap` 系统调用的部分. 最后需要对 `exit` 和 `fork` 两个系统调用进行修改, 添加对进程文件映射内存及 VMA 数组的处理. 
+
+  * 修改 `kernel/proc.c` 中的 `exit()` 函数.
+    在进程退出时, 需要像 `munmap()` 一样对文件映射部分内存进行取消映射. 因此添加的代码与 `munmap()` 中部分基本一样, 区别在于需要遍历 VMA 数组对所有文件映射内存进行取消映射, 而且是整个部分取消.
+
+  ```cpp
+  void
+  exit(int status)
+  {
+    // ...
+    if(p == initproc)
+      panic("init exiting");
+  
+    // unmap the mapped memory - lab10
+    for (i = 0; i < NVMA; ++i) {
+      if (p->vma[i].addr == 0) {
+        continue;
+      }
+      vma = &p->vma[i];
+      if ((vma->flags & MAP_SHARED)) {
+        for (va = vma->addr; va < vma->addr + vma->len; va += PGSIZE) {
+          if (uvmgetdirty(p->pagetable, va) == 0) {
+            continue;
+          }
+          n = min(PGSIZE, vma->addr + vma->len - va);
+          for (r = 0; r < n; r += n1) {
+            n1 = min(maxsz, n - i);
+            begin_op();
+            ilock(vma->f->ip);
+            if (writei(vma->f->ip, 1, va + i, va - vma->addr + vma->offset + i, n1) != n1) {
+              iunlock(vma->f->ip);
+              end_op();
+              panic("exit: writei failed");
+            }
+            iunlock(vma->f->ip);
+            end_op();
+          }
+        }
+      }
+      uvmunmap(p->pagetable, vma->addr, (vma->len - 1) / PGSIZE + 1, 1);
+      vma->addr = 0;
+      vma->len = 0;
+      vma->offset = 0;
+      vma->flags = 0;
+      vma->offset = 0;
+      fileclose(vma->f);
+      vma->f = 0;
+    }
+  
+    // Close all open files.
+    for(int fd = 0; fd < NOFILE; fd++){
+      if(p->ofile[fd]){
+        struct file *f = p->ofile[fd];
+        fileclose(f);
+        p->ofile[fd] = 0;
+      }
+    }
+    // ...
+  }
+  ```
+
+  * 修改 kernel/proc.c 中的 fork() 函数.
+    在使用 fork() 创建子进程时, 需要将父进程的 VMA 结构体进行拷贝, 从而获得相同的文件映射内存. 由于文件映射内存使用了 Lazy allocation, 所以此时的处理可以比较简单, 直接对父进程的 VMA 数组进行拷贝即可, 当子进程使用文件映射内存时则会通过 page fault 进行页面分配.
+    当然, 此处可以进行优化, 采用 COW 机制让父子进程指向相同文件映射物理页面, 对于不可写的文件映射内存会十分方便, 且可写的内存则通过 COW 机制重新进行更新. 
+
+  ```cpp
+  int
+  fork(void)
+  {
+    // ...
+    // increment reference counts on open file descriptors.
+    for(i = 0; i < NOFILE; i++)
+      if(p->ofile[i])
+        np->ofile[i] = filedup(p->ofile[i]);
+    np->cwd = idup(p->cwd);
+  
+    // copy all of VMA - lab10
+    for (i = 0; i < NVMA; ++i) {
+      if (p->vma[i].addr) {
+        np->vma[i] = p->vma[i];
+        filedup(np->vma[i].f);
+      }
+    }
+  
+    safestrcpy(np->name, p->name, sizeof(p->name));
+    // ...
+  }
+  ```
+
+
+
+### 结果
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/22dead4350564a7e83dcb63e59430df9.png)
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/a53fc651a8ed474a8b36a0a6125b2119.png)
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/7c9681e23850443e851aaa15003062b6.png)
+
