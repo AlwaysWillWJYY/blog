@@ -7,3 +7,14 @@
 * `GNN`表示
 * 输出不仅是`mlp`，也可以定位到行
 
+
+
+
+
+ sudo vi /etc/hosts 
+
+104.244.46.208  github.global.ssl.fastly.net
+
+108.160.170.39  assets-cdn.github.com 
+
+ service networking restart 
