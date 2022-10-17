@@ -57,7 +57,7 @@ class Main{
 
 ### 三、[最小移动距离](https://www.acwing.com/problem/content/4629/)
 
-```c++
+```cpp
 #include <iostream>
 #include <cstring>
 using namespace std;
