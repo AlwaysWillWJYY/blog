@@ -10,14 +10,10 @@ publish: false
 
 ## 关于博客
 
-博客代码：<https://github.com/ZhangjiaoJohn/blog>
+博客代码参考vuepress-theme-reco官方主题
 
 ### 个人信息
 
 计算机硕士在读,研究方向：人工智能,漏洞检测
 
 工作方向：研发岗
-
-### 主题
-
-博客目前使用的主题是vuepress-theme-reco
