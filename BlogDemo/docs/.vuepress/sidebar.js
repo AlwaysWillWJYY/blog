@@ -392,7 +392,7 @@ function getXiangRoute() {
                 },
                 {
                     title: 'MIT分布式系统',   // 必要的
-                    children: ['MIT6.824/lab1']
+                    children: ['MIT6.824/lab1','MIT6.824/lab2','MIT6.824/lab3','MIT6.824/lab4']
                 }
             ]
         },
